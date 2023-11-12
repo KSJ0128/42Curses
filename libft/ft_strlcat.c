@@ -6,13 +6,13 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 18:49:47 by seojkim           #+#    #+#             */
-/*   Updated: 2023/11/06 16:36:27 by seojkim          ###   ########.fr       */
+/*   Updated: 2023/11/12 17:07:18 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned int	ft_strlcat(char *dest, const char *src, unsigned int size)
+size_t	ft_strlcat(char *dest, const char *src, size_t size)
 {
 	unsigned int	d_len;
 	unsigned int	s_len;

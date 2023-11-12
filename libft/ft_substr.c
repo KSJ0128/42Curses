@@ -6,13 +6,13 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 20:15:46 by seojkim           #+#    #+#             */
-/*   Updated: 2023/11/10 02:56:36 by seojkim          ###   ########.fr       */
+/*   Updated: 2023/11/12 17:08:54 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(const char *s, unsigned int start, unsigned int len)
+char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
 	char			*sub;
 	unsigned int	i;

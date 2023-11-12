@@ -6,13 +6,13 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:39:02 by seojkim           #+#    #+#             */
-/*   Updated: 2023/11/06 16:35:22 by seojkim          ###   ########.fr       */
+/*   Updated: 2023/11/12 17:05:27 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, unsigned int n)
+void	ft_bzero(void *s, size_t n)
 {
 	s = ft_memset(s, 0, n);
 }

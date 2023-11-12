@@ -6,13 +6,13 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:43:18 by seojkim           #+#    #+#             */
-/*   Updated: 2023/11/09 13:42:50 by seojkim          ###   ########.fr       */
+/*   Updated: 2023/11/12 17:06:56 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, unsigned int n)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	unsigned char		*dest;
 	const unsigned char	*source;

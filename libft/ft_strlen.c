@@ -6,13 +6,13 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 14:53:23 by seojkim           #+#    #+#             */
-/*   Updated: 2023/11/06 16:36:30 by seojkim          ###   ########.fr       */
+/*   Updated: 2023/11/12 17:08:19 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned int	ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
 	unsigned int	len;
 
