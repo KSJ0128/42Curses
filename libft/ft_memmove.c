@@ -6,22 +6,23 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:52:08 by seojkim           #+#    #+#             */
-/*   Updated: 2023/11/11 22:53:38 by seojkim          ###   ########.fr       */
+/*   Updated: 2023/11/12 17:02:04 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, unsigned int len)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	unsigned char	*dest;
 	unsigned char	*source;
 	unsigned int	i;
 
+	if (dst == NULL && src == NULL)
+		return (0);
 	dest = (unsigned char *)dst;
 	source = (unsigned char *)src;
 	i = -1;
-
 	if (src >= dst)
 	{
 		while (++i < len)
