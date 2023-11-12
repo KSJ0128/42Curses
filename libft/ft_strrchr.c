@@ -3,37 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojkim <seojkim@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:09:12 by seojkim           #+#    #+#             */
-/*   Updated: 2023/10/08 17:06:39 by seojkim          ###   ########.fr       */
+/*   Updated: 2023/11/07 16:31:52 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	ft_len(const char *str)
-{
-	int	index;
-
-	index = 0;
-	while (str[index] != 0)
-	{
-		index++;
-	}
-	return (index);
-}
+#include "libft.h"
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int		i;
+	int	i;
 
-	i = ft_len(s) - 1;
+	i = ft_strlen(s) - 1;
 	while (i >= 0)
 	{
-		if (s[i] == c)
-		{
+		if (s[i] == (char)c)
 			return ((char *)s + i);
-		}
 		i--;
 	}
+	if ((char)c == '\0')
+		return ((char *)s + ft_strlen(s));
 	return (0);
 }

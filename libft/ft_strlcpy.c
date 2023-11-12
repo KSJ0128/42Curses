@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojkim <seojkim@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:57:55 by seojkim           #+#    #+#             */
-/*   Updated: 2023/10/08 18:22:22 by seojkim          ###   ########.fr       */
+/*   Updated: 2023/11/06 16:44:37 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static unsigned int	ft_len(const char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] != '\0')
-		i++;
-	return (i);
-}
+#include "libft.h"
 
 unsigned int	ft_strlcpy(char *dest, const char *src, unsigned int size)
 {
@@ -33,5 +25,5 @@ unsigned int	ft_strlcpy(char *dest, const char *src, unsigned int size)
 	}
 	if (size > 0)
 		dest[i] = '\0';
-	return (ft_len(src));
+	return (ft_strlen(src));
 }

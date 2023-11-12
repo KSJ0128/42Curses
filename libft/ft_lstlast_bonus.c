@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 14:21:33 by seojkim           #+#    #+#             */
-/*   Updated: 2023/11/06 16:35:42 by seojkim          ###   ########.fr       */
+/*   Created: 2023/11/06 15:03:57 by seojkim           #+#    #+#             */
+/*   Updated: 2023/11/08 17:07:00 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isdigit(int c)
+t_list	*ft_lstlast(t_list *lst)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
+	t_list	*node;
+
+	node = lst;
+	if (lst == NULL)
 		return (0);
+	while (node->next != NULL)
+		node = node->next;
+	return (node);
 }

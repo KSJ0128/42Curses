@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojkim <seojkim@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 15:07:41 by seojkim           #+#    #+#             */
-/*   Updated: 2023/10/08 15:40:21 by seojkim          ###   ########.fr       */
+/*   Updated: 2023/11/09 13:15:10 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 void	*ft_memchr(const void *s, int c, unsigned int n)
 {
@@ -17,13 +19,10 @@ void	*ft_memchr(const void *s, int c, unsigned int n)
 	str = (unsigned char *)s;
 	while (n > 0)
 	{
-		if (*str == c)
+		if (*str == (unsigned char)c)
 			return (str);
-		else
-		{
-			str++;
-			n--;
-		}
+		str++;
+		n--;
 	}
 	return (0);
 }

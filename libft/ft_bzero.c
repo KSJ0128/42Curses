@@ -3,22 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojkim <seojkim@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:39:02 by seojkim           #+#    #+#             */
-/*   Updated: 2023/10/08 15:36:49 by seojkim          ###   ########.fr       */
+/*   Updated: 2023/11/06 16:35:22 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 void	ft_bzero(void *s, unsigned int n)
 {
-	unsigned char	*ptr;
-
-	ptr = (unsigned char *)s;
-	while (n > 0)
-	{
-		*ptr = 0;
-		ptr++;
-		n--;
-	}
+	s = ft_memset(s, 0, n);
 }

@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 14:21:33 by seojkim           #+#    #+#             */
-/*   Updated: 2023/11/06 16:35:42 by seojkim          ###   ########.fr       */
+/*   Created: 2023/11/06 14:44:13 by seojkim           #+#    #+#             */
+/*   Updated: 2023/11/07 13:15:00 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isdigit(int c)
+void	*ft_calloc(unsigned int count, unsigned int size)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
+	void	*address;
+
+	address = malloc(size * count);
+	if (address == NULL)
 		return (0);
+	ft_memset(address, 0, size * count);
+	return (address);
 }

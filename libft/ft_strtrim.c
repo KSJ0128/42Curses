@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 14:21:33 by seojkim           #+#    #+#             */
-/*   Updated: 2023/11/06 16:35:42 by seojkim          ###   ########.fr       */
+/*   Created: 2023/10/10 21:25:19 by seojkim           #+#    #+#             */
+/*   Updated: 2023/11/11 23:45:09 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isdigit(int c)
+char	*ft_strtrim(const char *s1, const char *set)
 {
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
+	char			*trim;
+	unsigned int	f;
+	unsigned int	b;
+
+	f = 0;
+	b = ft_strlen(s1) - 1;
+	while (ft_strchr(set, s1[f]) != 0 && s1[f] != '\0')
+		f++;
+	while (ft_strchr(set, s1[b]) != 0 && b > f)
+		b--;
+	trim = (char *)malloc(b - f + 2);
+	if (trim == NULL)
 		return (0);
+	ft_strlcpy(trim, s1 + f, b - f + 2);
+	return (trim);
 }
