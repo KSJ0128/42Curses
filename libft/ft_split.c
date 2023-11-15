@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 15:17:03 by seojkim           #+#    #+#             */
-/*   Updated: 2023/11/12 17:01:50 by seojkim          ###   ########.fr       */
+/*   Updated: 2023/11/15 21:29:52 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,18 @@ char	*ft_strdup_size(char *src, int size)
 	return (dup);
 }
 
-void	insert_word(char **split, char *str, char c)
+void	free_split(char **split, int k)
 {
-	int	word_len;
 	int	i;
-	int	k;
 
-	word_len = 0;
-	i = (int)ft_strlen(str);
-	k = 0;
-	while (i-- > 0)
+	i = 0;
+	while (i < k)
 	{
-		if (str[word_len] == c)
-		{
-			if (word_len != 0)
-				split[k++] = ft_strdup_size(str, word_len);
-			str += word_len + 1;
-			word_len = 0;
-		}
-		else
-			word_len++;
+		free(split[i]);
+		i++;
 	}
-	if (word_len != 0)
-		split[k] = ft_strdup_size(str, word_len);
+	free(split);
+	return ;
 }
 
 int	word_count(char *str, char c)
@@ -72,6 +61,35 @@ int	word_count(char *str, char c)
 	return (cnt);
 }
 
+int	insert_word(char **split, char *str, char c)
+{
+	int	word_len;
+	int	k;
+
+	word_len = 0;
+	k = 0;
+	while (str[word_len] != '\0')
+	{
+		while (str[word_len] != c && str[word_len] != '\0')
+			word_len++;
+		if (word_len != 0)
+		{
+			split[k] = ft_strdup_size(str, word_len);
+			if (split[k] == 0)
+			{
+				free_split(split, k);
+				return (0);
+			}
+			k++;
+		}
+		if (str[word_len] == '\0')
+			break ;
+		str += word_len + 1;
+		word_len = 0;
+	}
+	return (1);
+}
+
 char	**ft_split(char *str, char c)
 {
 	char	**split;
@@ -81,7 +99,11 @@ char	**ft_split(char *str, char c)
 	split = (char **)malloc(sizeof(char *) * (word_i + 1));
 	if (split == NULL)
 		return (0);
-	insert_word(split, str, c);
-	split[word_i] = 0;
-	return (split);
+	if (!insert_word(split, str, c))
+		return (0);
+	else
+	{
+		split[word_i] = 0;
+		return (split);
+	}
 }
