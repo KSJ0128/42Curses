@@ -12,8 +12,36 @@
 va_list, va_start, va_copy, va_arg, va_end를 활용해서 !
 
 ```C
-print("Hello, World!")
+// 가변 인자 예시 코드
+
+int vout(int max, ...)
+{
+   va_list arg_ptr;
+   va_list args_copy;
+   int args;
+   char *day;
+   va_start(arg_ptr, max);
+   va_copy(args_copy, arg_ptr);
+   args = 0;
+   while(args < max)
+   {
+      day = va_arg(arg_ptr, char *);
+      printf("Day: %s\n", day);
+      args++;
+   }
+   va_end(arg_ptr);
+
+   args = 0;
+   while(args < max)
+   {
+      day = va_arg(args_copy, char *);
+      printf("Day: %s\n", day);
+      args++;
+   }
+   va_end(args_copy);
+}
 ```
+
 - ### va_list
 
 - ### va_start
@@ -23,6 +51,7 @@ print("Hello, World!")
 - ### va_arg
 
 - ### va_end
+
 
 가변 인자
 1. 최소 한 개 이상의 가변 인자가 필요하다.
