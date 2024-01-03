@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 21:50:04 by seojkim           #+#    #+#             */
-/*   Updated: 2023/12/28 16:12:03 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/01/03 15:07:30 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ int	ft_printf(const char *str, ...)
 				return (-1);
 		str++;
 	}
+	va_end(args);
 	return (cnt);
 }

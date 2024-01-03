@@ -22,11 +22,11 @@ $(NAME) : $(OBJS)
 	$(CC) $(CFLAG) -c $< -o $@ -I $(FT_H)
 
 clean :
-	$(RM) $(FT_O) $(BONUS_O)
+	$(RM) $(FT_O)
 
 fclean : clean
 	$(RM) $(NAME)
 
 re : fclean all
 
-.PHONY : all bonus clean fclean re
+.PHONY : all clean fclean re

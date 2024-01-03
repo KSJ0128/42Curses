@@ -6,14 +6,14 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 21:50:37 by seojkim           #+#    #+#             */
-/*   Updated: 2023/12/27 15:38:31 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/01/03 15:07:55 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include <stdarg.h>
-# include "libft.h"
+# include <unistd.h>
 
 int		ft_printf(const char *str, ...);
 int		print_args(char c, va_list *args, int *cnt);
