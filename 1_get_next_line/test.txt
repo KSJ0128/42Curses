@@ -1,0 +1,31 @@
+abcdefghijklm
+nopqrstuvwxyz
+0123456789
+get_next_line
+ABCDEFGHIJKLM
+NOPQRSTUVWXYZ
+0123456789
+get_next_line
+
+
+#include <stdio.h>
+int main()
+{
+	int fd = open("./test.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		perror("open");
+		exit(EXIT_FAILURE);
+	}
+
+	char *line;
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("%s", line);
+		free(line); // 각 줄에 대한 할당 해제를 잊지 마세요
+	}
+
+	close(fd);
+
+	return 0;
+}

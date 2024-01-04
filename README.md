@@ -1,4 +1,4 @@
-0# Subject
+# Subject
 
 | Circle | Subject | Score | Date |
 | :-------: | :-------: | :-------: | :-------: |
@@ -9,4 +9,3 @@
 # Exam
 | Circle | Exam | Score | Date |
 | :-------: | :-------: | :-------: | :-------: |
-| 2 | Exam2 | - | - |

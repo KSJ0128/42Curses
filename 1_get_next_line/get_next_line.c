@@ -6,66 +6,57 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 15:36:49 by seojkim           #+#    #+#             */
-/*   Updated: 2023/12/30 18:56:58 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/01/04 20:50:30 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*return_line(char *backup, char *next_pos)
 {
-	int	i;
+	char	*return_str;
+	size_t	next_line;
 
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == (char)c)
-			return ((char *)s + i);
-		i++;
-	}
-	if ((char)c == '\0')
-		return ((char *)s + i);
-	return (0);
-}
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
-{
-	int	i;
-
-	i = 0;
-	while (size > 1 && src[i] != '\0')
-	{
-		*(dest + i) = *(src + i);
-		size--;
-		i++;
-	}
-	if (size > 0)
-		dest[i] = '\0';
-	return (ft_strlen(src));
-}
-
-char *return_line(static char *backup) // return 완성, backup setting
-{
-	char *return_lines;
-
-	return_lines = backup;
-	return_lines[ft_strchr(backup, '\n') + 1] = '\0';
-	backup = ft_strchr(backup, '\n') + 1;
-	return (return_lines);
+	next_line = next_pos - backup;
+	return_str = (char *)malloc(sizeof(char) * (next_line) + 2);
+	if (return_str == NULL)
+		return (NULL);
+	ft_strlcpy(return_str, backup, next_line + 2);
+	ft_strlcpy(backup, next_pos + 1, ft_strlen(next_pos + 1) + 2);
+	return (return_str);
 }
 
 char	*get_next_line(int fd)
 {
-	void *buf;
-	static char *backup;
+	char		*buff;
+	char		*temp;
+	static char	*backup;
+	ssize_t		bytes_read;
 
-	backup = "";
-	while (true)
+	buff = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (buff == NULL)
+		return (NULL);
+	bytes_read = read(fd, buff, BUFFER_SIZE);
+	while (bytes_read > 0)
 	{
-		if (read(fd, buf, BUFFER_SIZE) <= 0)
-			return (NULL);
-		backup += (char *) buf;
-		if (ft_strchr(backup, '\n') != 0)
-			return (return_line);
+		buff[bytes_read] = '\0';
+		if (backup == NULL)
+			backup = ft_strjoin("", buff);
+		else
+		{
+			temp = backup;
+			backup = ft_strjoin(backup, buff);
+			free(temp);
+		}
+		if (ft_strchr(backup, '\n') != NULL)
+		{
+			free(buff);
+			return (return_line(backup, ft_strchr(backup, '\n')));
+		}
+		bytes_read = read(fd, buff, BUFFER_SIZE);
 	}
+	free(buff);
+	if (backup != NULL)
+		return (return_line(backup, ft_strchr(backup, '\0')));
+	return (NULL);
 }
-
