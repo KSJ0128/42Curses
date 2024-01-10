@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 15:36:49 by seojkim           #+#    #+#             */
-/*   Updated: 2024/01/10 21:09:20 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/01/10 21:32:05 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,23 +70,35 @@ char	*get_next_line(int fd)
 		{
 			free(buff);
 			buff = NULL;
-			if (!backup || *backup == '\0')
+			if (!backup)
 				return (NULL);
 			return_line = find_next_line(backup);
 			if (!return_line)
-				return (backup);
-			else
-				return (return_line);
+			{
+				free(return_line);
+				return_line = (char *)malloc(ft_strlen(backup) + 1);
+				if (!return_line)
+					return (NULL);
+				ft_strlcpy(return_line, backup, ft_strlen(backup) + 1);
+				free(backup);
+				backup = NULL;
+			}
+			return (return_line);
 		}
 		else
 		{
 			backup = backup_update(backup, buff);
 			return_line = find_next_line(backup);
 			if (!return_line)
-				continue ;
+			{
+				free(return_line);
+				continue;
+			}
 			else
 			{
+				free(backup);
 				free(buff);
+				backup = NULL;
 				buff = NULL;
 				return (return_line);
 			}
