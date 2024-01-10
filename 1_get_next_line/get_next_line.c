@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 15:36:49 by seojkim           #+#    #+#             */
-/*   Updated: 2024/01/10 21:32:05 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/01/10 21:39:56 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	*get_next_line(int fd)
 			if (!return_line)
 			{
 				free(return_line);
+				return_line = NULL;
 				return_line = (char *)malloc(ft_strlen(backup) + 1);
 				if (!return_line)
 					return (NULL);
@@ -92,6 +93,7 @@ char	*get_next_line(int fd)
 			if (!return_line)
 			{
 				free(return_line);
+				return_line = NULL;
 				continue;
 			}
 			else
