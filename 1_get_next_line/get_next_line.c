@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 15:36:49 by seojkim           #+#    #+#             */
-/*   Updated: 2024/01/10 21:39:56 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/01/14 21:00:09 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ char	*backup_update(char *backup, char *buff)
 	char	*new_backup;
 
 	if (!backup)
+	{
 		backup = ft_strdup("");
+		if (!backup)
+			return (NULL);
+	}
 	new_backup = (char *)malloc(ft_strlen(backup) + ft_strlen(buff) + 1);
 	if (!new_backup)
 		return (NULL);
@@ -28,85 +32,62 @@ char	*backup_update(char *backup, char *buff)
 	return (new_backup);
 }
 
-char	*find_next_line(char *backup)
+char	*read_line(char *buff, char *backup, int r_size)
+{
+	buff[r_size] = '\0';
+	backup = backup_update(backup, buff);
+	return (backup);
+}
+
+char	*find_next_line(char *backup, char	*n_pos)
 {
 	char	*next_line;
-	char	*n_pos;
 	int		n_size;
 
-	n_pos = backup;
-	while (*n_pos != '\n' && *n_pos != '\0')
-		n_pos++;
-	if (*n_pos == '\0')
+	n_size = n_pos - backup + 1;
+	next_line = (char *)malloc(sizeof(char) * (n_size + 1));
+	if (!next_line)
 		return (NULL);
-	else
-	{
-		n_size = n_pos - backup;
-		next_line = (char *)malloc(sizeof(char) * (n_size + 2)); // 개행 위치 + null
-		if (!next_line)
-			return (NULL);
-		ft_strlcpy(next_line, backup, n_size + 2);
-		ft_strlcpy(backup, n_pos + 1, ft_strlen(n_pos + 1) + 1);
-		return (next_line);
-	}
+	ft_strlcpy(next_line, backup, n_size + 1);
+	ft_strlcpy(backup, n_pos + 1, ft_strlen(n_pos + 1) + 1);
+	return (next_line);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*backup;
-	char		*buff;
 	char		*return_line;
+	char		buff[BUFFER_SIZE + 1];
+	char		*n_pos;
 	ssize_t		r_size;
 
 	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0)
 		return (NULL);
-	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buff)
-		return (NULL);
-	while ((r_size = read(fd, buff, BUFFER_SIZE)) >= 0)
+	while (1)
 	{
-		buff[r_size] = '\0';
-		if (r_size == 0)
+		r_size = read(fd, buff, BUFFER_SIZE);
+		if (r_size < 0)
+			break ;
+		backup = read_line(buff, backup, r_size);
+		if (!backup)
+			return (NULL);
+		n_pos = backup;
+		while (*n_pos != '\n' && *n_pos != '\0')
+			n_pos++;
+		if (*n_pos == '\0' && n_pos == backup)
+			break ;
+		else if (*n_pos == '\0' && r_size == 0)
 		{
-			free(buff);
-			buff = NULL;
-			if (!backup)
-				return (NULL);
-			return_line = find_next_line(backup);
-			if (!return_line)
-			{
-				free(return_line);
-				return_line = NULL;
-				return_line = (char *)malloc(ft_strlen(backup) + 1);
-				if (!return_line)
-					return (NULL);
-				ft_strlcpy(return_line, backup, ft_strlen(backup) + 1);
-				free(backup);
-				backup = NULL;
-			}
+			return_line = backup;
+			backup = NULL;
 			return (return_line);
 		}
+		else if (*n_pos == '\0' && r_size > 0)
+			continue ;
 		else
-		{
-			backup = backup_update(backup, buff);
-			return_line = find_next_line(backup);
-			if (!return_line)
-			{
-				free(return_line);
-				return_line = NULL;
-				continue;
-			}
-			else
-			{
-				free(backup);
-				free(buff);
-				backup = NULL;
-				buff = NULL;
-				return (return_line);
-			}
-		}
+			return (find_next_line(backup, n_pos));
 	}
-	free(buff);
-	buff = NULL;
+	free(backup);
+	backup = NULL;
 	return (NULL);
 }

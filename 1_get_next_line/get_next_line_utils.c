@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 15:36:51 by seojkim           #+#    #+#             */
-/*   Updated: 2024/01/09 20:51:51 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/01/14 16:43:48 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,6 @@ size_t	ft_strlen(const char *s)
 	while (s[len] != '\0')
 		len++;
 	return (len);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	int	i;
-
-	if (s == NULL)
-		return (NULL);
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == (char)c)
-			return ((char *)s + i);
-		i++;
-	}
-	if ((char)c == '\0')
-		return ((char *)s + i);
-	return (NULL);
 }
 
 size_t	ft_strlcpy(char *dest, const char *src, size_t size)
@@ -67,8 +49,8 @@ char	*ft_strdup(const char *s1)
 	if (s1 == NULL)
 		return (NULL);
 	address = (char *)malloc((ft_strlen(s1) + 1));
-	if (address == NULL)
-		return (0);
+	if (!address)
+		return (NULL);
 	ft_strlcpy(address, s1, ft_strlen(s1) + 1);
 	return (address);
 }
@@ -78,10 +60,14 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	char			*join;
 	unsigned int	s1_index;
 
-	if (s1 == 0 && s2 == 0)
-		return (0);
+	if (!s1 && !s2)
+		return (NULL);
+	else if (!s1)
+		return (ft_strdup(s2));
+	else if (!s2)
+		return (ft_strdup(s1));
 	join = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (join == NULL)
+	if (!join)
 		return (NULL);
 	s1_index = ft_strlcpy(join, s1, ft_strlen(s1) + 1);
 	ft_strlcpy(join + s1_index, s2, ft_strlen(s2) + 1);
