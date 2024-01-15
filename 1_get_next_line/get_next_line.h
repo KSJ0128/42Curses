@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 15:34:28 by seojkim           #+#    #+#             */
-/*   Updated: 2024/01/14 18:48:13 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/01/15 11:49:47 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # endif
 
 size_t	ft_strlen(const char *s);
+char	*ft_strchr(const char *s, int c);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(const char *s1, const char *s2);
