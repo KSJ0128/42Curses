@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 15:34:28 by seojkim           #+#    #+#             */
-/*   Updated: 2024/01/16 10:36:37 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/01/16 16:16:04 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define GET_NEXT_LINE_H
 # include <stdlib.h>
 # include <unistd.h>
-# include <fcntl.h>
 # include <limits.h>
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
 # endif
@@ -25,8 +25,9 @@ char	*ft_strchr(const char *s, int c);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 char	*ft_strdup(const char *s1);
 char	*ft_strjoin(const char *s1, const char *s2);
-char	*find_next_line(char **backup, char	*n_pos);
+char	*find_next_line(char **backup, char *n_pos);
 int		backup_update(char **backup, char *buff);
-int		read_line(int fd, char *buff, char **backup);
+int		read_line(int fd, char **backup, int *r_size);
 char	*get_next_line(int fd);
 #endif
+

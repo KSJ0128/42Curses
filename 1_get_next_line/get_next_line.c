@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 15:36:49 by seojkim           #+#    #+#             */
-/*   Updated: 2024/01/16 10:35:17 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/01/16 16:15:42 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,38 +36,42 @@ int	backup_update(char **backup, char *buff)
 
 	if (!*backup)
 	{
-		*backup = ft_strdup("");
+		*backup = ft_strdup(buff);
 		if (!*backup)
 			return (0);
+		return (1);
 	}
-	new_backup = (char *)malloc(ft_strlen(*backup) + ft_strlen(buff) + 1);
-	if (!new_backup)
+	else
 	{
+		new_backup = (char *)malloc(ft_strlen(*backup) + ft_strlen(buff) + 1);
+		if (!new_backup)
+		{
+			free(*backup);
+			*backup = NULL;
+			return (0);
+		}
+		ft_strlcpy(new_backup, *backup, ft_strlen(*backup) + 1);
+		ft_strlcpy(new_backup + ft_strlen(*backup), buff, ft_strlen(buff) + 1);
 		free(*backup);
-		*backup = NULL;
-		return (0);
+		*backup = new_backup;
 	}
-	ft_strlcpy(new_backup, *backup, ft_strlen(*backup) + 1);
-	ft_strlcpy(new_backup + ft_strlen(*backup), buff, ft_strlen(buff) + 1);
-	free(*backup);
-	*backup = new_backup;
 	return (1);
 }
 
-int	read_line(int fd, char *buff, char **backup)
+int	read_line(int fd, char **backup, int *r_size)
 {
-	int	r_size;
+	char	buff[BUFFER_SIZE + 1];
 
-	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	r_size = read(fd, buff, BUFFER_SIZE);
-	if (r_size < 0)
+	*r_size = read(fd, buff, BUFFER_SIZE);
+	if (*r_size < 0)
 		return (-1);
-	if (r_size == 0 && *backup == NULL)
+	if (*r_size == 0 && *backup == NULL)
 		return (0);
-	if (r_size == 0 && ft_strlen(*backup) == 0)
+	if (*r_size == 0 && ft_strlen(*backup) == 0)
 		return (-1);
-	buff[r_size] = '\0';
+	buff[*r_size] = '\0';
 	if (backup_update(backup, buff) == 0)
 		return (0);
 	return (1);
@@ -76,20 +80,20 @@ int	read_line(int fd, char *buff, char **backup)
 char	*get_next_line(int fd)
 {
 	static char	*backup;
-	char		buff[BUFFER_SIZE + 1];
 	char		*return_line;
 	int			check;
+	int			r_size;
 
 	while (1)
 	{
-		check = read_line(fd, buff, &backup);
+		check = read_line(fd, &backup, &r_size);
 		if (check == 0)
 			return (NULL);
 		else if (check == -1)
 			break ;
 		if (ft_strchr(backup, '\n') != NULL)
 			return (find_next_line(&backup, ft_strchr(backup, '\n')));
-		else if (ft_strlen(buff) == 0)
+		else if (r_size == 0)
 		{
 			return_line = backup;
 			backup = NULL;
