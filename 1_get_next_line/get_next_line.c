@@ -6,27 +6,27 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 15:36:49 by seojkim           #+#    #+#             */
-/*   Updated: 2024/01/15 18:06:37 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/01/16 10:35:17 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*find_next_line(char *backup, char	*n_pos)
+char	*find_next_line(char **backup, char	*n_pos)
 {
 	char	*next_line;
 	int		n_size;
 
-	n_size = n_pos - backup + 1;
+	n_size = n_pos - *backup + 1;
 	next_line = (char *)malloc(sizeof(char) * (n_size + 1));
 	if (!next_line)
 	{
-		free(backup);
-		backup = NULL;
+		free(*backup);
+		*backup = NULL;
 		return (NULL);
 	}
-	ft_strlcpy(next_line, backup, n_size + 1);
-	ft_strlcpy(backup, n_pos + 1, ft_strlen(n_pos + 1) + 1);
+	ft_strlcpy(next_line, *backup, n_size + 1);
+	ft_strlcpy(*backup, n_pos + 1, ft_strlen(n_pos + 1) + 1);
 	return (next_line);
 }
 
@@ -88,7 +88,7 @@ char	*get_next_line(int fd)
 		else if (check == -1)
 			break ;
 		if (ft_strchr(backup, '\n') != NULL)
-			return (find_next_line(backup, ft_strchr(backup, '\n')));
+			return (find_next_line(&backup, ft_strchr(backup, '\n')));
 		else if (ft_strlen(buff) == 0)
 		{
 			return_line = backup;

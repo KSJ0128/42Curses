@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 15:36:51 by seojkim           #+#    #+#             */
-/*   Updated: 2024/01/15 11:49:33 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/01/16 10:38:36 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,8 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	char			*join;
 	unsigned int	s1_index;
 
-	if (!s1 && !s2)
+	if (!s1 || !s2)
 		return (NULL);
-	else if (!s1)
-		return (ft_strdup(s2));
-	else if (!s2)
-		return (ft_strdup(s1));
 	join = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!join)
 		return (NULL);
