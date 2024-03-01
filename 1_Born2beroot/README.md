@@ -273,6 +273,8 @@ vi /etc/ssh/sshd_config
 # PermitRootLogin no : SSH를 통해 root로 로그인 할 수 없게 설정한다.
 ```
 
+<br>
+
 해당 과제는 들어오는 요청에 대한 설정만을 요구하기 때문에 sshd_config 파일만 수정해준다.
 
 **SSHD : SSH Daemon. SSH 연결을 받아주기 위해 대기하는 프로세스.
