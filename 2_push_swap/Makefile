@@ -4,7 +4,7 @@ CC = cc
 CFLAG = -Wall -Wextra -Werror
 RM = rm -f
 
-FT_C = main.c ft_printf.c print_char_str_nbr.c
+FT_C = main.c ft_printf.c print_char_str_nbr.c command_1.c command_2.c
 
 FT_O = $(FT_C:.c=.o)
 
