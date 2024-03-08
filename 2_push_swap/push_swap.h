@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:22:08 by seojkim           #+#    #+#             */
-/*   Updated: 2024/03/04 20:12:02 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/03/08 20:32:46 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdlib.h>
 # include "ft_printf.h"
 # define TRUE 1
+# define ERROR -1
+# define NONE_INTEGER 99999999999
 
 typedef struct node
 {
@@ -32,24 +34,33 @@ typedef struct deq
 	p_node *bottom;
 }	p_deq;
 
-typedef struct push_swap
-{
-	p_deq a;
-	p_deq b;
-}	p_push_swap;
-
-int		ft_atoi(const char *str, int check);
-p_node	*node_init(int num);
-p_deq	*stack_init();
-void	push_node_to_stack(p_deq *stack, p_node *new, int idx);
-void	print_stack(p_deq *stack);
-int		main(int argc, char *argv[]);
-void	swap(p_deq *stack);
-void	swap_all(p_deq *p, p_deq *q);
-void	push(p_deq *p, p_deq *q);
-void	rotate(p_deq *stack);
-void	rotate_all(p_deq *p, p_deq *q);
-void 	r_rotate(p_deq *stack);
-void 	r_rotate_all(p_deq *p, p_deq *q);
+size_t		ft_strlcpy(char *dest, const char *src, size_t size);
+size_t		ft_strlen(const char *s);
+long long	ft_atoll(const char *str);
+char		**ft_split(char *str, char c, int *word_cnt);
+char		*ft_strdup_size(char *src, int size);
+void		free_split(char **split, int k);
+int			word_count(char *str, char c);
+int			insert_word(char **split, char *str, char c);
+void		swap(p_deq *stack);
+void		swap_all(p_deq *p, p_deq *q);
+void		push(p_deq *p, p_deq *q);
+void		rotate(p_deq *stack);
+void		rotate_all(p_deq *p, p_deq *q);
+void 		r_rotate(p_deq *stack);
+void 		r_rotate_all(p_deq *p, p_deq *q);
+p_node		*node_init(int num);
+p_deq		*stack_init();
+void		push_node_to_stack(p_deq *stack, int num);
+void		free_stack(p_deq *stack);
+int 		parsing_to_stack(char *argv_str, p_deq *stack);
+void 		stack_to_array(p_deq *stack);
+void 		sorting_array(int *array, int s, int e);
+void 		indexing_stack(p_deq *stack, int *array);
+p_node 		*find_data(p_deq *stack, int *array, int idx);
+void 		overlap_check(p_deq *stack, int *array, int size);
+int			main(int argc, char *argv[]);
+void		print_stack(p_deq *stack);
+void 		print_array(int *array, int size);
 
 #endif
