@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:22:08 by seojkim           #+#    #+#             */
-/*   Updated: 2024/03/08 20:32:46 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/03/20 20:15:32 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,23 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include "ft_printf.h"
-# define TRUE 1
-# define ERROR -1
+# define SUCCESS 1
+# define ERROR 0
 # define NONE_INTEGER 99999999999
 
 typedef struct node
 {
 	int				data;
-	unsigned int	idx;
 	struct node		*next;
 	struct node		*prev;
-}	p_node;
+}	t_node;
 
-typedef struct deq
+typedef struct stack
 {
 	int		size;
-	p_node *top;
-	p_node *bottom;
-}	p_deq;
+	t_node	*top;
+	t_node	*bottom;
+}	t_deq;
 
 size_t		ft_strlcpy(char *dest, const char *src, size_t size);
 size_t		ft_strlen(const char *s);
@@ -42,25 +41,27 @@ char		*ft_strdup_size(char *src, int size);
 void		free_split(char **split, int k);
 int			word_count(char *str, char c);
 int			insert_word(char **split, char *str, char c);
-void		swap(p_deq *stack);
-void		swap_all(p_deq *p, p_deq *q);
-void		push(p_deq *p, p_deq *q);
-void		rotate(p_deq *stack);
-void		rotate_all(p_deq *p, p_deq *q);
-void 		r_rotate(p_deq *stack);
-void 		r_rotate_all(p_deq *p, p_deq *q);
-p_node		*node_init(int num);
-p_deq		*stack_init();
-void		push_node_to_stack(p_deq *stack, int num);
-void		free_stack(p_deq *stack);
-int 		parsing_to_stack(char *argv_str, p_deq *stack);
-void 		stack_to_array(p_deq *stack);
-void 		sorting_array(int *array, int s, int e);
-void 		indexing_stack(p_deq *stack, int *array);
-p_node 		*find_data(p_deq *stack, int *array, int idx);
-void 		overlap_check(p_deq *stack, int *array, int size);
+void		swap(t_deq *stack);
+void		swap_all(t_deq *p, t_deq *q);
+void		push(t_deq *p, t_deq *q);
+void		rotate(t_deq *stack);
+void		rotate_all(t_deq *p, t_deq *q);
+void		r_rotate(t_deq *stack);
+void		r_rotate_all(t_deq *p, t_deq *q);
+t_node		*node_init(int num);
+t_deq		*stack_init();
+void		stack_a_setting(t_deq *stack, int num);
+void		free_stack(t_deq *stack);
+int			parsing_to_stack(char *argv_str, t_deq *stack);
+void		stack_to_array(t_deq *stack);
+void		sorting_array(int *array, int s, int e);
+void		indexing_stack(t_deq *stack, int *array);
+t_node		*find_data(t_deq *stack, int *array, int idx);
+void		overlap_check(t_deq *stack, int *array, int size);
+void		push_a_to_b(t_deq *a, t_deq *b);
+void		sandglass(t_deq *stack_a);
 int			main(int argc, char *argv[]);
-void		print_stack(p_deq *stack);
-void 		print_array(int *array, int size);
+void		print_array(int *array, int size);
+void 		print_stack(t_deq *stack);
 
 #endif

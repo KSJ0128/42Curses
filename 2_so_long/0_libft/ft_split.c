@@ -6,11 +6,11 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 15:17:03 by seojkim           #+#    #+#             */
-/*   Updated: 2024/03/10 03:07:55 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/01 17:09:41 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
 char	*ft_strdup_size(char *src, int size)
 {
@@ -90,13 +90,12 @@ int	insert_word(char **split, char *str, char c)
 	return (1);
 }
 
-char	**ft_split(char *str, char c, int *stack_size)
+char	**ft_split(char *str, char c)
 {
 	char	**split;
 	int		word_i;
 
 	word_i = word_count(str, c);
-	*stack_size = word_i;
 	split = (char **)malloc(sizeof(char *) * (word_i + 1));
 	if (split == NULL)
 		return (0);

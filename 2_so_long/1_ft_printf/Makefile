@@ -1,21 +1,25 @@
-NAME = push_swap
+NAME = libftprintf.a
 
 CC = cc
 CFLAG = -Wall -Wextra -Werror
+ARC = ar -rc
 RM = rm -f
 
-FT_C = main.c print.c ft_split.c ft_printf.c print_char_str_nbr.c command_1.c command_2.c stack_setting.c stack_setting2.c sandglass.c
+FT_C = ft_printf.c print_char_str_nbr.c
 
 FT_O = $(FT_C:.c=.o)
 
-FT_H = push_swap.h
+FT_H = ft_printf.h
 
 OBJS = $(FT_O)
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+	$(ARC) $@ $^
+
+%.o : %.c
+	$(CC) $(CFLAG) -c $< -o $@ -I $(FT_H)
 
 clean :
 	$(RM) $(FT_O)

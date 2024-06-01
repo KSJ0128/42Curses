@@ -6,58 +6,112 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:48:08 by seojkim           #+#    #+#             */
-/*   Updated: 2024/03/04 19:53:21 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/03/20 21:57:11 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void swap(p_deq *stack)
+void	swap(t_deq *stack)
 {
-	p_node *first;
-	p_node *second;
-	p_node *third;
+	t_node	*tmp;
 
-	first = stack->top;
-	second = first->next;
-	third = second->next;
-	first->next = third;
-	first->prev = second;
-	second->next = first;
-	second->prev = NULL;
-	third->prev = second;
-	stack->top = second;
+	if (stack->size < 2)
+		return ;
+	tmp = stack->top;
+	stack->top = tmp->next;
+	tmp->next = stack->top->next;
+	stack->top->next = tmp;
+	tmp->prev = stack->top;
+	stack->top->prev = NULL;
 }
 
-void swap_all(p_deq *p, p_deq *q)
+void	swap_all(t_deq *p, t_deq *q)
 {
 	swap(p);
 	swap(q);
 }
-
-void push(p_deq *p, p_deq *q)
+void	push_setting(t_node *tmp, t_deq *p)
 {
-	p_node *p_top;
-	p_node *q_top;
-
-	if (q->size == 0)
-		return ;
-	p_top = p->top;
-	q_top = q->top;
-	q_top->next->prev = NULL;
-	q->top = q_top->next;
 	if (p->size == 0)
 	{
-		p->top = q_top;
-		q_top->next = NULL;
-		q_top->prev = NULL;
+		p->top = tmp;
+		p->bottom = tmp;
+		p->bottom->next = NULL;
+	}
+	else if (p->size == 1)
+	{
+		p->top = tmp;
+		p->top->next = p->bottom;
+		p->bottom->prev = p->top;
 	}
 	else
 	{
-		q_top->next = p_top;
-		p_top->prev = q_top;
-		p->top = q_top;
+		tmp->next = p->top;
+		p->top = tmp;
+
+		p->top->prev = tmp;
 	}
-	p->size++;
-	q->size--;
+	p->top->prev = NULL;
+}
+
+void	push(t_deq *p, t_deq *q)
+{
+	t_node	*p_top;
+
+	if (p->size == 0)
+		return ;
+	p_top = p->top;
+	if (p->size == 1)
+	{
+		p->top = NULL;
+		p->bottom = NULL;
+	}
+	else if (p->size > 1)
+	{
+		p->top = p_top->next;
+		p->top->prev = NULL;
+	}
+	if (q->size == 0)
+	{
+		q->top = p_top;
+		q->bottom = p_top;
+		q->top->next = NULL;
+	}
+	else if (q->size == 1)
+	{
+		q->top = p_top;
+		q->top->next = q->bottom;
+		q->bottom->prev = q->top;
+	}
+	else
+	{
+		p_top->next = q->top;
+		q->top->prev = p_top;
+		q->top = p_top;
+	}
+	q->top->prev = NULL;
+	p->size--;
+	q->size++;
+}
+
+void	rotate(t_deq *stack)
+{
+	t_node	*tmp;
+
+	if (stack->size < 2)
+		return ;
+	tmp = stack->bottom->prev;
+	stack->bottom->next = stack->top;
+	stack->top->prev = stack->bottom;
+	stack->top = stack->bottom;
+	stack->bottom = tmp;
+	stack->top->prev = NULL;
+	stack->bottom->next = NULL;
+}
+
+void	rotate_all(t_deq *p, t_deq *q)
+{
+	rotate(p);
+	rotate(q);
 }

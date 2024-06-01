@@ -6,50 +6,81 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:15:56 by seojkim           #+#    #+#             */
-/*   Updated: 2024/03/04 19:53:06 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/03/20 20:50:02 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void rotate(p_deq *stack)
+void	r_rotate(t_deq *stack)
 {
-	p_node *stack_top;
-	p_node *stack_bottom;
+	t_node	*tmp;
 
-	stack_top = stack->top;
-	stack_bottom = stack->bottom;
-	stack_top->next->prev = NULL;
-	stack->top = stack_top->next;
-	stack_top->prev = stack_bottom;
-	stack_top->next = NULL;
-	stack_bottom->next = stack_top;
-	stack->bottom = stack_top;
+	if (stack->size < 2)
+		return ;
+	tmp = stack->top->next;
+	stack->bottom->next = stack->top;
+	stack->top->prev = stack->bottom;
+	stack->bottom = stack->top;
+	stack->top = tmp;
+	stack->top->prev = NULL;
+	stack->bottom->next = NULL;
 }
 
-void rotate_all(p_deq *p, p_deq *q)
-{
-	rotate(p);
-	rotate(q);
-}
-
-void r_rotate(p_deq *stack)
-{
-	p_node *stack_top;
-	p_node *stack_bottom;
-
-	stack_top = stack->top;
-	stack_bottom = stack->bottom;
-	stack_bottom->prev->next = NULL;
-	stack->bottom = stack_bottom->prev;
-	stack_bottom->next = stack_top;
-	stack_bottom->prev = NULL;
-	stack_top->prev = stack_bottom;
-	stack->top = stack_bottom;
-}
-
-void r_rotate_all(p_deq *p, p_deq *q)
+void	r_rotate_all(t_deq *p, t_deq *q)
 {
 	r_rotate(p);
 	r_rotate(q);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	unsigned int	len;
+
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
+}
+
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+{
+	int	i;
+
+	i = 0;
+	while (size > 1 && src[i] != '\0')
+	{
+		*(dest + i) = *(src + i);
+		size--;
+		i++;
+	}
+	if (size > 0)
+		dest[i] = '\0';
+	return (ft_strlen(src));
+}
+
+long long	ft_atoll(const char *str)
+{
+	long long	num;
+	long long	sign;
+
+	num = 0;
+	sign = 1;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '+')
+		str++;
+	else if (*str == '-')
+	{
+		str++;
+		sign = -1;
+	}
+	if (*str == '\0' || *str < '0' || *str > '9')
+		return (NONE_INTEGER);
+	while (*str >= '0' && *str <= '9')
+	{
+		num = num * 10 + (*str - '0');
+		str++;
+	}
+	return (sign * num);
 }

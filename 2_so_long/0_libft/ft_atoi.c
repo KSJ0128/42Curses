@@ -6,60 +6,34 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 21:02:42 by seojkim           #+#    #+#             */
-/*   Updated: 2024/03/06 22:00:41 by seojkim          ###   ########.fr       */
+/*   Updated: 2023/11/06 20:45:28 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-size_t ft_strlen(const char *s)
+int	ft_atoi(const char *str)
 {
-	unsigned int len;
-
-	len = 0;
-	while (s[len] != '\0')
-		len++;
-	return (len);
-}
-
-size_t ft_strlcpy(char *dest, const char *src, size_t size)
-{
-	int i;
+	int	i;
+	int	num;
+	int	sign;
 
 	i = 0;
-	while (size > 1 && src[i] != '\0')
-	{
-		*(dest + i) = *(src + i);
-		size--;
-		i++;
-	}
-	if (size > 0)
-		dest[i] = '\0';
-	return (ft_strlen(src));
-}
-
-long long ft_atoll(const char *str)
-{
-	long long num;
-	long long sign;
-
 	num = 0;
 	sign = 1;
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-		str++;
-	if (*str == '+')
-		str++;
-	else if (*str == '-')
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == '+')
+		i++;
+	else if (str[i] == '-')
 	{
-		str++;
+		i++;
 		sign = -1;
 	}
-	if (*str == '\0' || *str < '0' || *str > '9')
-		return (NONE_INTEGER);
-	while (*str >= '0' && *str <= '9')
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		num = num * 10 + (*str - '0');
-		str++;
+		num = num * 10 + (str[i] - '0');
+		i++;
 	}
 	return (sign * num);
 }

@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sandglass.c                                        :+:      :+:    :+:   */
+/*   stack_setting2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:11:15 by seojkim           #+#    #+#             */
-/*   Updated: 2024/03/08 15:29:49 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/03/10 03:09:57 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "push_swap.h"
+#include "push_swap.h"
 
-p_node *find_data(p_deq *stack, int *array, int idx)
+// Find Array for Indexing
+t_node	*find_data(t_deq *stack, int *array, int idx)
 {
-	p_node *now;
+	t_node	*now;
 
 	now = stack->top;
 	while (now != NULL)
 	{
 		if (array[idx] == now->data)
-			break;
+			break ;
 		now = now->next;
 	}
 	return (now);
 }
 
-void indexing_stack(p_deq *stack, int *array)
+// Indexing stack for Sandglass
+void	indexing_stack(t_deq *stack, int *array)
 {
-	int idx;
-	p_node *node;
+	int		idx;
+	t_node	*node;
 
 	idx = 0;
 	while (idx < stack->size)
@@ -40,12 +42,32 @@ void indexing_stack(p_deq *stack, int *array)
 	}
 }
 
-void sorting_array(int *array, int s, int e)
+// Parameter Overlap Check
+void	overlap_check(t_deq *stack, int *array, int size)
 {
-	int pivot;
-	int tmp;
-	int l;
-	int r;
+	int	idx;
+
+	idx = 1;
+	while (idx < size)
+	{
+		if (array[idx] == array[idx - 1])
+		{
+			ft_printf("Error\n");
+			free_stack(stack);
+			free(array);
+			exit(0);
+		}
+		idx++;
+	}
+}
+
+// Quick Sort for Indexing
+void	sorting_array(int *array, int s, int e)
+{
+	int	pivot;
+	int	tmp;
+	int	l;
+	int	r;
 
 	pivot = (s + e) / 2;
 	l = s;
@@ -63,41 +85,15 @@ void sorting_array(int *array, int s, int e)
 	if (pivot > s)
 		sorting_array(array, s, pivot);
 	if (e > pivot + 1)
-		sorting_array(array, pivot+1, e);
+		sorting_array(array, pivot + 1, e);
 }
 
-void overlap_check(p_deq *stack, int *array, int size)
+// Stack to Array for Indexing
+void	stack_to_array(t_deq *stack)
 {
-	int idx;
-
-	idx = 1;
-	while (idx < size)
-	{
-		if (array[idx] == array[idx-1])
-		{
-			ft_printf("Error\n");
-			free_stack(stack);
-			free(array);
-			exit(0);
-		}
-		idx++;
-	}
-}
-
-void print_array(int *array, int size)
-{
-	int i = 0;
-	ft_printf("Array\n");
-	for(int i = 0; i < size; i++)
-		ft_printf("%d ", array[i]);
-	ft_printf("\n");
-}
-
-void stack_to_array(p_deq *stack)
-{
-	p_node *now;
-	int *array;
-	int idx;
+	t_node	*now;
+	int		*array;
+	int		idx;
 
 	array = (int *)malloc(sizeof(int) * (stack->size));
 	if (!array)
@@ -115,4 +111,5 @@ void stack_to_array(p_deq *stack)
 	sorting_array(array, 0, stack->size - 1);
 	overlap_check(stack, array, stack->size);
 	indexing_stack(stack, array);
+	free(array);
 }
