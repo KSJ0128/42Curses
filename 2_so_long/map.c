@@ -6,130 +6,112 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 20:03:13 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/01 17:28:50 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/12 20:35:33 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "so_long.h"
 
 // 직사각형 형태인지, 처음과 마지막이 벽으로 둘러쌓여있는지, 세로가 벽으로 둘러쌓여있는지
-int	box_check(t_game *game)
+int	box_check(t_data *data)
 {
-	int index;
+	int idx;
 	int size;
 
-	index = 0;
-	size = ft_strlen(game->map1D);
-	while (index < size)
+	idx = 0;
+	data->width = ft_strlen(data->map2D[0]);
+	while (idx < data->height)
 	{
-		if ((index / game->width == 0) || (index / game->width == game->height - 1)) // 첫째 줄, 마지막 줄
+		size = ft_strlen(data->map2D[idx]);
+		if (data->width != size) // 직사각형 체크
+			return (NULL);
+		if ((idx == 0) || (idx == data->height - 1)) // 첫째 줄, 마지막 줄
 		{
-			if ((index + 1) % game->width == 0 && game->map1D[index] != '\n')
+			if (ft_strchr(data->map2D[idx], '0') != NULL || (ft_strchr(data->map2D[idx], 'C') != NULL))
 				return (NULL);
-			else if ((index + 1) % game->width != 0 && game->map1D[index] != '1')
+			else if (ft_strchr(data->map2D[idx], 'P') != NULL || (ft_strchr(data->map2D[idx], 'E') != NULL))
 				return (NULL);
 		}
-		else if (index % game->width == 0 && game->map1D[index] != '1') // 중간 줄 첫 번째 인덱스
+		else if (data->map2D[idx][0] != '1' || data->map2D[idx][size-2] != '1')
 			return (NULL);
-		else if ((index + 2) % game->width == 0 && game->map1D[index] != '1')  // 중간 줄 마지막 인덱스
-			return (NULL);
-		if ((index + 1) % game->width == 0 && game->map1D[index] != '\n')  // 매 라인 개행 체크
-			return (NULL);
-		index++;
+		idx++;
+	}
+	return (SUCCESS);
+}
+
+int find_P_E(t_data *data, char *str, char c, int r)
+{
+	int idx;
+
+	idx = 0;
+	while (str[idx] != '\0')
+	{
+		if (str[idx] == c && c == 'P')
+		{
+			data->Pr = r;
+			data->Pc = idx;
+			data->P_check++;
+		}
+		if (str[idx] == c && c == 'E')
+		{
+			data->Er = r;
+			data->Ec = idx;
+			data->E_check++;
+		}
+		idx++;
+	}
+	return (SUCCESS);
+}
+
+int find_C(t_data *data, char *str)
+{
+	int idx;
+
+	idx = 0;
+	while (str[idx] != '\0')
+	{
+		if (str[idx] == 'C')
+			data->C_cnt++;
+		idx++;
 	}
 	return (SUCCESS);
 }
 
 // 시작, 도착, 수집품 체크
-int	P_E_C_check(t_game *game)
+int	P_E_C_check(t_data *data)
 {
-	int P_pos;
-	int E_pos;
 	int idx;
 
-	if (ft_strchr(game->map1D, 'P') != ft_strrchr(game->map1D, 'P') || ft_strchr(game->map1D, 'P') == NULL)
-		return (NULL);
-	if (ft_strchr(game->map1D, 'E') != ft_strrchr(game->map1D, 'E') || ft_strchr(game->map1D, 'E') == NULL)
-		return (NULL);
-	if (ft_strchr(game->map1D, 'C') == NULL)
-		return (NULL);
-	P_pos = ft_strchr(game->map1D, 'P') - game->map1D;
-	E_pos = ft_strchr(game->map1D, 'E') - game->map1D;
 	idx = 0;
-	game->C_cnt = 0;
-	while (game->map1D[idx] != '\0')
+	data->P_check = 0;
+	data->E_check = 0;
+	data->C_cnt = 0;
+	while (idx < data->height)
 	{
-		if (game->map1D[idx] == 'C')
-			game->C_cnt++;
+		if (ft_strchr(data->map2D[idx], 'P') != NULL)
+			find_P_E(data, data->map2D[idx], 'P', idx);
+		if (ft_strchr(data->map2D[idx], 'E') != NULL)
+			find_P_E(data, data->map2D[idx], 'E', idx);
+		if (ft_strchr(data->map2D[idx], 'C') != NULL)
+			find_C(data, data->map2D[idx]);
 		idx++;
 	}
-	game->Pr = P_pos / game->width;
-	game->Pc = P_pos % game->width;
-	game->Er = E_pos / game->width;
-	game->Ec = E_pos % game->width;
+	if (data->P_check != 1 || data->E_check != 1 || data->C_cnt < 1)
+		return (NULL);
 	return (SUCCESS);
 }
 
-int read_map(int fd, t_game *game)
+int map_check(t_data *data)
 {
-	char	*str;
-	int		index;
-
-	index = 0;
-	game->height = 0;
-	game->map2D = (char **)malloc(sizeof(char *) * (word_i + 1));
-
-	while(TRUE)
-	{
-		str = ft_strdup(get_next_line(fd));
-		game->height++;
-		if (str != NULL)
-		{
-			if (index == 0) // 첫 줄일 때 맵 가로 길이 설정
-				game->width = ft_strlen(str);
-			game->map1D = ft_strjoin(game->map1D, str);
-			if (game->map1D == NULL)
-				return (NULL);
-			index += game->width;
-		}
-		if (!str) // map 다 읽었을 때
-		{
-			game->height--;
-			free(str);
-			return (SUCCESS);
-		}
-	}
-}
-
-int map_check(char *argv, t_game *game)
-{
-	int		fd;
-
-	fd = open(argv, O_RDONLY);
-	if (read_map(fd, game) == NULL)
-		return (NULL);
-	if (!box_check(game)) // 직사각형, 박스 체크
+	if (!box_check(data)) // 직사각형, 박스 체크
 	{
 		ft_printf("Error : 직사각형 형태가 아닙니다.\n");
 		return (NULL);
 	}
-	else if (!P_E_C_check(game))
+	else if (!P_E_C_check(data))
 	{
 		ft_printf("Error : 출발 지점, 도착 지점, 수집품 개수가 올바르지 않습니다.\n");
 		return (NULL);
 	}
-	game->map2D = ft_split(game->map1D, '\n');
-
-	for (int i = 0; i < game->height; i++)
-	{
-		for (int j = 0; j < game->width; j++)
-		{
-			printf("%c",game->map2D[i][j]);
-		}
-		printf("\n");
-	}
-
-	if (game->map2D == NULL)
-		return (NULL);
 	return (SUCCESS);
 }
