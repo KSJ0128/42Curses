@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:19:20 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/12 20:58:12 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/12 22:31:15 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int check_for_move(t_data *data, char c)
 	return (SUCCESS);
 }
 
-void collect_end_check(t_data *data, char c)
+void collect_end_check(t_data *data)
 {
 	data->move++;
 	ft_printf("움직인 횟수 : %d\n", data->move);

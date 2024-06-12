@@ -6,15 +6,15 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 02:05:22 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/12 20:38:43 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/12 22:43:25 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	free_split(char **split, int k)
+void free_split(char **split, int k)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (i < k)
@@ -23,7 +23,6 @@ void	free_split(char **split, int k)
 		i++;
 	}
 	free(split);
-	return ;
 }
 
 // void free_game_resources(t_game *game)
@@ -58,7 +57,7 @@ void count_line(int fd, t_data *data)
 // map -> 2차원 배열
 int map_setting(t_data *data, char **argv, int fd)
 {
-	int	idx;
+	int idx;
 
 	count_line(fd, data);
 	fd = open(argv[1], O_RDONLY);
@@ -83,11 +82,15 @@ int map_setting(t_data *data, char **argv, int fd)
 
 int main(int argc, char *argv[])
 {
-	t_data	*data;
-	int		fd;
+	t_data *data;
+	int fd;
 
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
+		return (NULL);
+	if (argc < 2)
+		return (NULL);
+	if (ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])) == NULL)
 		return (NULL);
 	fd = open(argv[1], O_RDONLY);
 	if (map_setting(data, argv, fd) == NULL)

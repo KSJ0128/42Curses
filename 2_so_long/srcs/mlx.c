@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 23:55:34 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/12 20:43:07 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/12 22:31:12 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void mlx_initialize(t_data *data)
 	data->move = 0; // 움직인 횟수
 	data->len = 50; // 이미지 픽셀 한 개 길이
 	data->mlx = NULL;
-    data->win = NULL;
-    data->img = NULL;
-    data->goal = "img/goal.xpm";
+	data->win = NULL;
+	data->img = NULL;
+	data->goal = "img/goal.xpm";
 	data->floor = "img/floor.xpm";
 	data->item = "img/item.xpm";
 	data->player = "img/player.xpm";
@@ -51,16 +51,17 @@ void mlx_initialize(t_data *data)
 int close_window(t_data *data)
 {
 	if (data->win)
-        mlx_destroy_window(data->mlx, data->win);
-    exit(0); // 정상 종료
-    return (NULL);
+		mlx_destroy_window(data->mlx, data->win);
+	exit(0); // 정상 종료
+	return (NULL);
 }
 
-int	key_press(int keycode, t_data *data)
+int key_press(int keycode, t_data *data)
 {
 	int check;
 
-    if (keycode == KEY_W)
+	check = 0;
+	if (keycode == KEY_W)
 		check = check_for_move(data, 'W');
 	else if (keycode == KEY_A)
 		check = check_for_move(data, 'A');
@@ -71,13 +72,13 @@ int	key_press(int keycode, t_data *data)
 	else if (keycode == KEY_ESC)
 		close_window(data);
 	if (check && keycode == KEY_W)
-		collect_end_check(data, 'W');
+		collect_end_check(data);
 	else if (check && keycode == KEY_A)
-		collect_end_check(data, 'A');
+		collect_end_check(data);
 	else if (check && keycode == KEY_S)
-		collect_end_check(data, 'S');
+		collect_end_check(data);
 	else if (check && keycode == KEY_D)
-		collect_end_check(data, 'D');
+		collect_end_check(data);
 	return (SUCCESS);
 }
 // map -> mlx setting
@@ -115,7 +116,7 @@ int mlx_map_display(t_data *data)
 	data->mlx = mlx_init();
 	if (data->mlx == NULL)
 		return (NULL);
-    data->win = mlx_new_window(data->mlx, (data->width - 1) * data->len, data->height * data->len, "so_long");
+	data->win = mlx_new_window(data->mlx, (data->width - 1) * data->len, data->height * data->len, "so_long");
 	if (data->win == NULL)
 		return (NULL);
 	mlx_map_to_img(*data);

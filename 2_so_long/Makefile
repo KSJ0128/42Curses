@@ -1,27 +1,47 @@
 NAME = so_long
 
 CC = cc
-CFLAG = -Wall -Wextra -Werror
-MLX = -g -fsanitize=address -L./mlx -lmlx -framework OpenGL -framework AppKit -lz
-RM = rm -f
+CFLAGS = -Wall -Wextra -Werror -MMD
+MLX = -g3 -fsanitize=address -L./mlx -lmlx -framework OpenGL -framework AppKit -lz
+RM = rm -rf
 
-FT_C = main.c map.c util1.c dfs.c mlx.c mlx2.c 1_ft_printf/ft_printf.c 1_ft_printf/print_char_str_nbr.c 1_get_next_line/get_next_line.c 1_get_next_line/get_next_line_utils.c
+INCLUDES = -I. -I./$(LIBFT_DIR) -I./mlx
 
-FT_O = $(FT_C:.c=.o)
+LIBFT = libft.a
+LIBFT_DIR = 0_libft
 
-FT_H = so_long.h
+SRCS_DIR = srcs
+OBJS_DIR = objs
+INCLUDES_DIR = includes
 
-OBJS = $(FT_O)
+INCLUDES = -I./$(INCLUDES_DIR) -I./$(LIBFT_DIR)
+
+SRCS := $(shell find $(SRCS_DIR) -type f -name '*.c')
+OBJS := $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))
+DEPS := $(OBJS:%.o=%.d)
 
 all : $(NAME)
 
-$(NAME) : $(OBJS)
-	$(CC) $(MLX) -o $(NAME) $(OBJS)
+$(NAME) : $(LIBFT_DIR)/$(LIBFT) $(OBJS)
+	@$(RM) $@
+	$(CC) $(CFLAGS) $(MLX) -o $@ $^
+
+$(LIBFT_DIR)/$(LIBFT) :
+	@$(MAKE) -C $(LIBFT_DIR);
+
+$(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
+	@mkdir -p $(@D);
+	$(CC) $(CFLAGS) $(INCLUDES) -c $^ -o $@
+
+-include $(DEPS)
 
 clean :
-	$(RM) $(FT_O)
+	@$(MAKE) -C $(LIBFT_DIR) clean;
+	@rm -rf $(LIBFT)
+	$(RM) $(OBJS) $(DEPS)
 
 fclean : clean
+	@$(MAKE) -C $(LIBFT_DIR) fclean;
 	$(RM) $(NAME)
 
 re : fclean all
