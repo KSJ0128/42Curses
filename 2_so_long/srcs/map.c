@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 20:03:13 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/12 20:35:33 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/15 00:45:44 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,34 @@ int	box_check(t_data *data)
 	int size;
 
 	idx = 0;
-	data->width = ft_strlen(data->map2D[0]);
+	data->width = ft_strlen(data->map2D[0]); // 맵의 가로 길이, 개행 포함
 	while (idx < data->height)
 	{
 		size = ft_strlen(data->map2D[idx]);
 		if (data->width != size) // 직사각형 체크
+		{
+			ft_printf("width : %d idx : %d size : %d\n", data->width, idx, size);
+			ft_printf("check1\n");
 			return (NULL);
+		}
 		if ((idx == 0) || (idx == data->height - 1)) // 첫째 줄, 마지막 줄
 		{
 			if (ft_strchr(data->map2D[idx], '0') != NULL || (ft_strchr(data->map2D[idx], 'C') != NULL))
+			{
+				ft_printf("check2\n");
 				return (NULL);
+			}
 			else if (ft_strchr(data->map2D[idx], 'P') != NULL || (ft_strchr(data->map2D[idx], 'E') != NULL))
+			{
+				ft_printf("check3\n");
 				return (NULL);
+			}
 		}
 		else if (data->map2D[idx][0] != '1' || data->map2D[idx][size-2] != '1')
+		{
+			ft_printf("check4\n");
 			return (NULL);
+		}
 		idx++;
 	}
 	return (SUCCESS);

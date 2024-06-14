@@ -5,8 +5,6 @@ CFLAGS = -Wall -Wextra -Werror -MMD
 MLX = -g3 -fsanitize=address -L./mlx -lmlx -framework OpenGL -framework AppKit -lz
 RM = rm -rf
 
-INCLUDES = -I. -I./$(LIBFT_DIR) -I./mlx
-
 LIBFT = libft.a
 LIBFT_DIR = 0_libft
 
@@ -23,22 +21,20 @@ DEPS := $(OBJS:%.o=%.d)
 all : $(NAME)
 
 $(NAME) : $(LIBFT_DIR)/$(LIBFT) $(OBJS)
-	@$(RM) $@
-	$(CC) $(CFLAGS) $(MLX) -o $@ $^
+	$(CC) $(CFLAGS) $(MLX) -o $@ $(OBJS) $(LIBFT_DIR)/$(LIBFT)
 
 $(LIBFT_DIR)/$(LIBFT) :
 	@$(MAKE) -C $(LIBFT_DIR);
 
 $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
 	@mkdir -p $(@D);
-	$(CC) $(CFLAGS) $(INCLUDES) -c $^ -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 -include $(DEPS)
 
 clean :
 	@$(MAKE) -C $(LIBFT_DIR) clean;
-	@rm -rf $(LIBFT)
-	$(RM) $(OBJS) $(DEPS)
+	@$(RM) $(OBJS) $(DEPS)
 
 fclean : clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean;

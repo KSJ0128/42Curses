@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 02:05:22 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/12 22:43:25 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/15 00:45:27 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void free_split(char **split, int k)
 
 void count_line(int fd, t_data *data)
 {
-	data->height = 0;
+	data->height = 0;  // 맵의 세로 길이
 	while (TRUE)
 	{
 		if (get_next_line(fd) != NULL)
@@ -53,6 +53,7 @@ void count_line(int fd, t_data *data)
 		else
 			break;
 	}
+	ft_printf("height : %d\n", data->height);
 }
 // map -> 2차원 배열
 int map_setting(t_data *data, char **argv, int fd)
@@ -96,7 +97,12 @@ int main(int argc, char *argv[])
 	if (map_setting(data, argv, fd) == NULL)
 		return (NULL);
 	close(fd);
-	if (!map_check(data) || !route_check(data))
+	if (!map_check(data))
+	{
+		free_split(data->map2D, data->height);
+		return (NULL);
+	}
+	if (!route_check(data))
 	{
 		free_split(data->map2D, data->height);
 		free_split(data->visited, data->height);

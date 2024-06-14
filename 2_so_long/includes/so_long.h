@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 02:05:54 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/12 22:31:26 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/15 00:51:56 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@
 #include <stdlib.h>
 
 #include "mlx.h"
-
 #include "libft.h"
 #include "get_next_line.h"
 #include "ft_printf.h"
