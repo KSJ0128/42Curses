@@ -6,7 +6,7 @@
 | 1 | ft_printf | 100 | 2024.01.03 |
 | 1 | get_next_line | 100 | 2024.01.16 |
 | 1 | Born2beroot | 110 | 2024.02.29 |
-
+| 2 | so_long | 93 | 2024.06.21 |
 
 # Exam
 | Circle | Exam | Score | Date |
