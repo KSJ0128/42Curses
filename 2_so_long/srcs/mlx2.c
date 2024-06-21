@@ -6,52 +6,81 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:19:20 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/12 22:31:15 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/17 21:32:21 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "so_long.h"
+#include "so_long.h"
 
-int check_for_move(t_data *data, char c)
+int	check_for_move(t_game *game, char c)
 {
-	if (data->map2D[data->Pr][data->Pc] != 'E')
-		data->map2D[data->Pr][data->Pc] = '0';
-	if (c == 'W' && data->map2D[data->Pr - 1][data->Pc] != '1')
-		data->Pr--;
-	else if (c == 'A' && data->map2D[data->Pr][data->Pc - 1] != '1')
-		data->Pc--;
-	else if (c == 'S' && data->map2D[data->Pr + 1][data->Pc] != '1')
-		data->Pr++;
-	else if (c == 'D' && data->map2D[data->Pr][data->Pc + 1] != '1')
-		data->Pc++;
+	if (game->map[game->pr][game->pc] != 'E')
+		game->map[game->pr][game->pc] = '0';
+	if (c == 'U' && game->map[game->pr - 1][game->pc] != '1')
+		game->pr--;
+	else if (c == 'L' && game->map[game->pr][game->pc - 1] != '1')
+		game->pc--;
+	else if (c == 'D' && game->map[game->pr + 1][game->pc] != '1')
+		game->pr++;
+	else if (c == 'R' && game->map[game->pr][game->pc + 1] != '1')
+		game->pc++;
 	else
-	{
-		ft_printf("이동이 불가능합니다.\n");
-		return (NULL);
-	}
+		return (0);
 	return (SUCCESS);
 }
 
-void collect_end_check(t_data *data)
+void	collect_end_check(t_game *game)
 {
-	data->move++;
-	ft_printf("움직인 횟수 : %d\n", data->move);
-	if (data->map2D[data->Pr][data->Pc] == 'C')
+	game->move++;
+	ft_printf("Moving Step : %d\n", game->move);
+	if (game->map[game->pr][game->pc] == 'C')
 	{
-		data->C_cnt--;
-		data->map2D[data->Pr][data->Pc] = '0';
-		mlx_map_to_img(*data);
+		game->c_cnt--;
+		game->map[game->pr][game->pc] = '0';
 	}
-	else if (data->map2D[data->Pr][data->Pc] == 'E')
+	else if (game->map[game->pr][game->pc] == 'E')
 	{
-		mlx_map_to_img(*data);
-		if (data->C_cnt == 0)
-			close_window(data);
+		if (game->c_cnt == 0)
+			close_window(game);
 	}
-	else
-		mlx_map_to_img(*data);
-	if (data->map2D[data->Pr][data->Pc] != 'E')
-		data->map2D[data->Pr][data->Pc] = 'P';
-	data->img = mlx_xpm_file_to_image(data->mlx, data->player, &(data->len), &(data->len));
-	mlx_put_image_to_window(data->mlx, data->win, data->img, data->len * data->Pc, data->len * data->Pr); // 현 위치
+	mlx_map_to_img(*game, game->len);
+	if (game->map[game->pr][game->pc] != 'E')
+		game->map[game->pr][game->pc] = 'P';
+	game->img = mlx_xpm_file_to_image(game->mlx, game->player, \
+										&(game->len), &(game->len));
+	mlx_put_image_to_window(game->mlx, game->win, game->img, \
+								game->len * game->pc, game->len * game->pr);
+}
+
+void	img_setting(t_game *game, int w, int h, int len)
+{
+	game->img = mlx_xpm_file_to_image(game->mlx, game->floor, &len, &len);
+	mlx_put_image_to_window(game->mlx, game->win, game->img, len * w, len * h);
+	if (game->map[h][w] == '1')
+		game->img = mlx_xpm_file_to_image(game->mlx, game->wall, &len, &len);
+	else if (game->map[h][w] == 'P')
+		game->img = mlx_xpm_file_to_image(game->mlx, game->player, &len, &len);
+	else if (game->map[h][w] == 'C')
+		game->img = mlx_xpm_file_to_image(game->mlx, game->item, &len, &len);
+	else if (game->map[h][w] == 'E')
+		game->img = mlx_xpm_file_to_image(game->mlx, game->goal, &len, &len);
+	mlx_put_image_to_window(game->mlx, game->win, game->img, len * w, len * h);
+}
+
+void	mlx_map_to_img(t_game game, int len)
+{
+	int	w;
+	int	h;
+
+	h = 0;
+	while (h < game.height)
+	{
+		w = 0;
+		while (w < game.width)
+		{
+			img_setting(&game, w, h, len);
+			w++;
+		}
+		h++;
+	}
 }

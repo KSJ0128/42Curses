@@ -6,15 +6,28 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 02:05:22 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/15 00:45:27 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/18 15:44:31 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void free_split(char **split, int k)
+int	handle_exception(int err)
 {
-	int i;
+	if (err == 0)
+		ft_printf("Error\nInvalid file count.\n");
+	else if (err == 1)
+		ft_printf("Error\nInvalid file name.\n");
+	else if (err == 2)
+		ft_printf("Error\nIt's not a rectangle.\n");
+	else if (err == 3)
+		ft_printf("Error\nIt's invalid P, E, C.\n");
+	exit(1);
+}
+
+void	free_split(char **split, int k)
+{
+	int	i;
 
 	i = 0;
 	while (i < k)
@@ -25,89 +38,78 @@ void free_split(char **split, int k)
 	free(split);
 }
 
-// void free_game_resources(t_game *game)
-// {
-//     if (game->map2D)
-//     {
-//         for (int i = 0; game->map2D[i]; i++)
-//             free(game->map2D[i]);
-//         free(game->map2D);
-//     }
-// 	if (game->visited)
-// 	{
-// 		for (int i = 0; game->visited[i]; i++)
-// 			free(game->visited[i]);
-// 		free(game->visited);
-// 	}
-// 	if (game)
-// 		free(game);
-// }
-
-void count_line(int fd, t_data *data)
+void	set_height(char **argv, t_game *game)
 {
-	data->height = 0;  // 맵의 세로 길이
+	int		fd;
+	char	*line;
+
+	fd = open(argv[1], O_RDONLY);
+	game->height = 0;
 	while (TRUE)
 	{
-		if (get_next_line(fd) != NULL)
-			data->height++;
-		else
-			break;
-	}
-	ft_printf("height : %d\n", data->height);
-}
-// map -> 2차원 배열
-int map_setting(t_data *data, char **argv, int fd)
-{
-	int idx;
-
-	count_line(fd, data);
-	fd = open(argv[1], O_RDONLY);
-	data->map2D = (char **)malloc(sizeof(char *) * (data->height + 1));
-	if (data->map2D == NULL)
-		return (NULL);
-	idx = 0;
-	while (idx < data->height)
-	{
-		data->map2D[idx] = ft_strdup(get_next_line(fd));
-		if (data->map2D[idx] == NULL)
+		line = get_next_line(fd);
+		if (line != NULL)
 		{
-			free_split(data->map2D, idx);
-			free(data);
-			return (NULL);
+			game->height++;
+			free(line);
+		}
+		else
+			break ;
+	}
+	close(fd);
+}
+
+int	read_map(t_game *game, char **argv)
+{
+	int	idx;
+	int	fd;
+
+	set_height(argv, game);
+	game->map = (char **)malloc(sizeof(char *) * (game->height + 1));
+	if (game->map == NULL)
+		return (0);
+	idx = 0;
+	fd = open(argv[1], O_RDONLY);
+	while (idx < game->height)
+	{
+		game->map[idx] = get_next_line(fd);
+		if (game->map[idx] == NULL)
+		{
+			free_split(game->map, idx);
+			free(game);
+			return (0);
 		}
 		idx++;
 	}
-	data->map2D[idx] = "\0";
+	game->map[idx] = "\0";
+	close(fd);
 	return (SUCCESS);
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-	t_data *data;
-	int fd;
+	t_game	*game;
 
-	data = (t_data *)malloc(sizeof(t_data));
-	if (!data)
-		return (NULL);
-	if (argc < 2)
-		return (NULL);
+	if (argc != 2)
+		handle_exception(0);
 	if (ft_strnstr(argv[1], ".ber", ft_strlen(argv[1])) == NULL)
-		return (NULL);
-	fd = open(argv[1], O_RDONLY);
-	if (map_setting(data, argv, fd) == NULL)
-		return (NULL);
-	close(fd);
-	if (!map_check(data))
+		handle_exception(1);
+	game = (t_game *)malloc(sizeof(t_game));
+	if (!game)
 	{
-		free_split(data->map2D, data->height);
-		return (NULL);
+		free_split(game->map, game->height);
+		free(game);
+		return (0);
 	}
-	if (!route_check(data))
+	if (!read_map(game, argv))
+		return (0);
+	if (!check_valid_map(game) || !check_valid_pec(game) || !route_check(game))
 	{
-		free_split(data->map2D, data->height);
-		free_split(data->visited, data->height);
-		return (NULL);
+		free_split(game->map, game->height);
+		free(game);
+		return (0);
 	}
-	mlx_map_display(data);
-	return (0);
+	if (!mlx_map_display(game))
+		return (0);
+	return (SUCCESS);
 }

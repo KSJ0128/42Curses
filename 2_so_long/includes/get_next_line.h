@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 15:34:28 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/05 15:37:37 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/17 21:29:05 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,4 @@ char	*find_next_line(char **backup, char *n_pos);
 int		backup_update(char **backup, char *buff);
 int		read_line(int fd, char **backup, int *r_size);
 char	*get_next_line(int fd);
-int main(int argc, char **argv);
 #endif
-
