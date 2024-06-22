@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ps_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/06 15:17:03 by seojkim           #+#    #+#             */
-/*   Updated: 2024/03/10 03:07:55 by seojkim          ###   ########.fr       */
+/*   Created: 2024/06/22 18:23:58 by seojkim           #+#    #+#             */
+/*   Updated: 2024/06/22 19:05:24 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+# include "push_swap.h"
 
-char	*ft_strdup_size(char *src, int size)
+char	*ps_strdup_size(char *src, int size)
 {
 	char	*dup;
 
 	dup = (char *)malloc(size + 1);
-	if (dup == NULL)
-		return (0);
+	if (!dup)
+		exit (1);
 	ft_strlcpy(dup, src, size + 1);
 	return (dup);
 }
 
-void	free_split(char **split, int k)
+void	ps_free_split(char **split, int k)
 {
 	int	i;
 
@@ -37,11 +37,11 @@ void	free_split(char **split, int k)
 	return ;
 }
 
-int	word_count(char *str, char c)
+long long	ps_word_count(char *str, char c)
 {
-	int	i;
-	int	cnt;
-	int	sep;
+	long long	i;
+	long long	cnt;
+	int			sep;
 
 	i = 0;
 	cnt = 0;
@@ -61,10 +61,10 @@ int	word_count(char *str, char c)
 	return (cnt);
 }
 
-int	insert_word(char **split, char *str, char c)
+int	ps_insert_word(char **split, char *str, char c)
 {
-	int	word_len;
-	int	k;
+	long long	word_len;
+	int			k;
 
 	word_len = 0;
 	k = 0;
@@ -74,10 +74,10 @@ int	insert_word(char **split, char *str, char c)
 			word_len++;
 		if (word_len != 0)
 		{
-			split[k] = ft_strdup_size(str, word_len);
+			split[k] = ps_strdup_size(str, word_len);
 			if (split[k] == 0)
 			{
-				free_split(split, k);
+				ps_free_split(split, k);
 				return (0);
 			}
 			k++;
@@ -90,21 +90,19 @@ int	insert_word(char **split, char *str, char c)
 	return (1);
 }
 
-char	**ft_split(char *str, char c, int *stack_size)
+char	**ps_split(char *str, char c, long long *stack_size)
 {
 	char	**split;
-	int		word_i;
 
-	word_i = word_count(str, c);
-	*stack_size = word_i;
-	split = (char **)malloc(sizeof(char *) * (word_i + 1));
-	if (split == NULL)
-		return (0);
-	if (!insert_word(split, str, c))
-		return (0);
+	*stack_size = ps_word_count(str, c);
+	split = (char **)malloc(sizeof(char *) * (*stack_size + 1));
+	if (!split)
+		exit(1);
+	if (!ps_insert_word(split, str, c))
+		exit(1);
 	else
 	{
-		split[word_i] = 0;
+		split[*stack_size] = 0;
 		return (split);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:48:08 by seojkim           #+#    #+#             */
-/*   Updated: 2024/03/20 21:57:11 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/22 13:47:52 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	push_setting(t_node *tmp, t_deq *p)
 	p->top->prev = NULL;
 }
 
-void	push(t_deq *p, t_deq *q)
+void	push(t_deq *p, t_deq *q) // p : 주는 애 q : 받는 애
 {
 	t_node	*p_top;
 

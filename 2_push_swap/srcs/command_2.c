@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:15:56 by seojkim           #+#    #+#             */
-/*   Updated: 2024/03/20 20:50:02 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/22 21:09:49 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,6 @@ void	r_rotate_all(t_deq *p, t_deq *q)
 	r_rotate(q);
 }
 
-size_t	ft_strlen(const char *s)
-{
-	unsigned int	len;
-
-	len = 0;
-	while (s[len] != '\0')
-		len++;
-	return (len);
-}
-
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
-{
-	int	i;
-
-	i = 0;
-	while (size > 1 && src[i] != '\0')
-	{
-		*(dest + i) = *(src + i);
-		size--;
-		i++;
-	}
-	if (size > 0)
-		dest[i] = '\0';
-	return (ft_strlen(src));
-}
-
 long long	ft_atoll(const char *str)
 {
 	long long	num;
@@ -76,9 +50,11 @@ long long	ft_atoll(const char *str)
 		sign = -1;
 	}
 	if (*str == '\0' || *str < '0' || *str > '9')
-		return (NONE_INTEGER);
+		handle_exception(1);
 	while (*str >= '0' && *str <= '9')
 	{
+		if (*str < '0' || *str > '9')
+			handle_exception(1);
 		num = num * 10 + (*str - '0');
 		str++;
 	}

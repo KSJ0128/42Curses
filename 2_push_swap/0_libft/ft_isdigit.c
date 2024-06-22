@@ -1,37 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/10 02:48:59 by seojkim           #+#    #+#             */
-/*   Updated: 2024/03/10 03:05:22 by seojkim          ###   ########.fr       */
+/*   Created: 2023/10/05 14:21:33 by seojkim           #+#    #+#             */
+/*   Updated: 2023/11/06 16:35:42 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "libft.h"
 
-void	print_array(int *array, int size)
+int	ft_isdigit(int c)
 {
-	int	i;
-
-	i = 0;
-	ft_printf("Array\n");
-	for (int i = 0; i < size; i++)
-		ft_printf("%d ", array[i]);
-	ft_printf("\n");
-}
-
-void print_stack(t_deq *stack)
-{
-	t_node *tmp  = stack->top;
-
-	ft_printf("Array\n");
-	while (tmp != NULL)
-	{
-		ft_printf("%d ", tmp->data);
-		tmp = tmp->next;
-	}
-	ft_printf("\n");
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
 }

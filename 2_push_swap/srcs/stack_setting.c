@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:26:38 by seojkim           #+#    #+#             */
-/*   Updated: 2024/03/17 23:41:17 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/22 19:06:09 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ t_node	*node_init(int num)
 
 t_deq	*stack_init()
 {
-	t_deq *stack;
+	t_deq	*stack;
+
 	stack = (t_deq *)malloc(sizeof(t_deq));
 	if (!stack)
-		return (ERROR);
+		exit(1);
 	stack->size = 0;
 	stack->top = NULL;
 	stack->bottom = NULL;
@@ -60,10 +61,7 @@ void	stack_a_setting(t_deq *stack, int num)
 
 	new = node_init(num);
 	if (!new)
-	{
-		free_stack(stack);
-		exit(0);
-	}
+		exit(1);
 	if (stack->size == 0)
 		stack->top = new;
 	else if (stack->size == 1)
@@ -83,21 +81,21 @@ void	stack_a_setting(t_deq *stack, int num)
 int	parsing_to_stack(char *argv_num, t_deq *stack)
 {
 	char		**split_argv;
-	int			idx;
-	int			stack_size;
+	long long	idx;
+	long long	stack_size;
 	long long	num;
 
-	split_argv = ft_split(argv_num, ' ', &stack_size);
+	stack_size = 0;
+	split_argv = ps_split(argv_num, ' ', &stack_size);
+	if (!split_argv)
+		exit(1);
 	idx = 0;
-	if (!stack_size)
-		return (ERROR);
 	while (idx < stack_size)
 	{
 		num = ft_atoll(split_argv[idx]);
-		if (num > 2147483647 || num < -2147483648 || num == NONE_INTEGER)
-			return (ERROR);
-		else
-			stack_a_setting(stack, num);
+		if (num > 2147483647 || num < -2147483648)
+			handle_exception(1);
+		stack_a_setting(stack, num);
 		idx++;
 	}
 	return (SUCCESS);

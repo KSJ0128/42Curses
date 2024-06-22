@@ -1,26 +1,50 @@
 NAME = push_swap
 
 CC = cc
-CFLAG = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -MMD
 RM = rm -f
 
-FT_C = main.c print.c ft_split.c ft_printf.c print_char_str_nbr.c command_1.c command_2.c stack_setting.c stack_setting2.c sandglass.c
+LIBFT = libft.a
+LIBFT_DIR = 0_libft
 
-FT_O = $(FT_C:.c=.o)
+PRINTF = libftprintf.a
+PRINTF_DIR = 1_ft_printf
 
-FT_H = push_swap.h
+SRCS_DIR = srcs
+OBJS_DIR = objs
+INCLUDES_DIR = includes
 
-OBJS = $(FT_O)
+INCLUDES = -I./$(INCLUDES_DIR) -I./$(LIBFT_DIR) -I./$(PRINTF_DIR)
+
+SRCS := $(shell find $(SRCS_DIR) -type f -name '*.c')
+OBJS := $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))
+DEPS := $(OBJS:%.o=%.d)
 
 all : $(NAME)
 
-$(NAME) : $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+$(NAME) : $(LIBFT_DIR)/$(LIBFT) $(PRINTF_DIR)/$(PRINTF) $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFT_DIR)/$(LIBFT) $(PRINTF_DIR)/$(PRINTF)
+
+$(LIBFT_DIR)/$(LIBFT) :
+	@$(MAKE) -C $(LIBFT_DIR);
+
+$(PRINTF_DIR)/$(PRINTF) :
+	@$(MAKE) -C $(PRINTF_DIR);
+
+$(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
+	@mkdir -p $(@D);
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+-include $(DEPS)
 
 clean :
-	$(RM) $(FT_O)
+	@$(MAKE) -C $(LIBFT_DIR) clean;
+	@$(MAKE) -C $(PRINTF_DIR) clean;
+	@$(RM) $(OBJS) $(DEPS)
 
 fclean : clean
+	@$(MAKE) -C $(LIBFT_DIR) fclean;
+	@$(MAKE) -C $(PRINTF_DIR) fclean;
 	$(RM) $(NAME)
 
 re : fclean all
