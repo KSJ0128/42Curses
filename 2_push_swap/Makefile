@@ -1,7 +1,7 @@
 NAME = push_swap
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -MMD
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -MMD
 RM = rm -f
 
 LIBFT = libft.a

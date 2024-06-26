@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:26:38 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/22 19:06:09 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/25 15:22:46 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	free_stack(t_deq *stack)
 	free(stack);
 }
 
-void	stack_a_setting(t_deq *stack, int num)
+void	stack_setting(t_deq *stack, int num)
 {
 	t_node	*new;
 
@@ -93,9 +93,9 @@ int	parsing_to_stack(char *argv_num, t_deq *stack)
 	while (idx < stack_size)
 	{
 		num = ft_atoll(split_argv[idx]);
-		if (num > 2147483647 || num < -2147483648)
+		if (num > MAX || num < MIN)
 			handle_exception(1);
-		stack_a_setting(stack, num);
+		stack_setting(stack, num);
 		idx++;
 	}
 	return (SUCCESS);

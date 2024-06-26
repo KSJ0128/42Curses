@@ -6,13 +6,13 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:15:56 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/22 21:09:49 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/26 20:31:14 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	r_rotate(t_deq *stack)
+void	rotate(t_deq *stack)
 {
 	t_node	*tmp;
 
@@ -23,6 +23,27 @@ void	r_rotate(t_deq *stack)
 	stack->top->prev = stack->bottom;
 	stack->bottom = stack->top;
 	stack->top = tmp;
+	stack->top->prev = NULL;
+	stack->bottom->next = NULL;
+}
+
+void	rotate_all(t_deq *p, t_deq *q)
+{
+	rotate(p);
+	rotate(q);
+}
+
+void	r_rotate(t_deq *stack)
+{
+	t_node	*tmp;
+
+	if (stack->size < 2)
+		return ;
+	tmp = stack->bottom->prev;
+	stack->bottom->next = stack->top;
+	stack->top->prev = stack->bottom;
+	stack->top = stack->bottom;
+	stack->bottom = tmp;
 	stack->top->prev = NULL;
 	stack->bottom->next = NULL;
 }

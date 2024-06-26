@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:50:45 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/22 21:10:43 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/26 20:55:59 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,13 @@ int	main(int argc, char *argv[])
 	stack_to_array(stack_a);
 	ft_printf("정렬 전 스택\n");
 	print_stack(stack_a);
-	sandglass(stack_a);
-	// ft_printf("정렬 후 스택\n");
-	// print_stack(stack_a);
+	if (stack_a->size == 2)
+		sorting_two(stack_a);
+	else if (stack_a->size == 3)
+		sorting_three_one(stack_a);
+	else
+		greedy(stack_a);
+	ft_printf("최종 스택\n");
+	print_stack(stack_a);
 	return (0);
 }

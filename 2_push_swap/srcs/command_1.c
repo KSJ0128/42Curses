@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:48:08 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/22 13:47:52 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/26 20:31:00 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	swap(t_deq *stack)
 	if (stack->size < 2)
 		return ;
 	tmp = stack->top;
-	stack->top = tmp->next;
+	stack->top = stack->top->next;
 	tmp->next = stack->top->next;
+	if (stack->top->next != NULL)
+		stack->top->next->prev = tmp;
 	stack->top->next = tmp;
 	tmp->prev = stack->top;
 	stack->top->prev = NULL;
@@ -31,31 +33,8 @@ void	swap_all(t_deq *p, t_deq *q)
 	swap(p);
 	swap(q);
 }
-void	push_setting(t_node *tmp, t_deq *p)
-{
-	if (p->size == 0)
-	{
-		p->top = tmp;
-		p->bottom = tmp;
-		p->bottom->next = NULL;
-	}
-	else if (p->size == 1)
-	{
-		p->top = tmp;
-		p->top->next = p->bottom;
-		p->bottom->prev = p->top;
-	}
-	else
-	{
-		tmp->next = p->top;
-		p->top = tmp;
 
-		p->top->prev = tmp;
-	}
-	p->top->prev = NULL;
-}
-
-void	push(t_deq *p, t_deq *q) // p : 주는 애 q : 받는 애
+void	push_p(t_deq *p, t_deq *q)
 {
 	t_node	*p_top;
 
@@ -72,6 +51,11 @@ void	push(t_deq *p, t_deq *q) // p : 주는 애 q : 받는 애
 		p->top = p_top->next;
 		p->top->prev = NULL;
 	}
+	push_q(p, q, p_top);
+}
+
+void	push_q(t_deq *p, t_deq *q, t_node *p_top)
+{
 	if (q->size == 0)
 	{
 		q->top = p_top;
@@ -93,25 +77,4 @@ void	push(t_deq *p, t_deq *q) // p : 주는 애 q : 받는 애
 	q->top->prev = NULL;
 	p->size--;
 	q->size++;
-}
-
-void	rotate(t_deq *stack)
-{
-	t_node	*tmp;
-
-	if (stack->size < 2)
-		return ;
-	tmp = stack->bottom->prev;
-	stack->bottom->next = stack->top;
-	stack->top->prev = stack->bottom;
-	stack->top = stack->bottom;
-	stack->bottom = tmp;
-	stack->top->prev = NULL;
-	stack->bottom->next = NULL;
-}
-
-void	rotate_all(t_deq *p, t_deq *q)
-{
-	rotate(p);
-	rotate(q);
 }
