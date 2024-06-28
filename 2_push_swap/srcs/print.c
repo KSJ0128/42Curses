@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:48:59 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/26 19:42:41 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/28 12:13:05 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	print_array(int *array, int size)
 {
-	int	i;
-
-	i = 0;
 	ft_printf("Array\n");
 	for (int i = 0; i < size; i++)
 		ft_printf("%d ", array[i]);

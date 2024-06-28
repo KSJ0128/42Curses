@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:09:00 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/26 19:49:16 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/06/28 13:36:50 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,7 @@ void sorting_three_two(t_deq *stack_a)
 	else if (thr->data < two->data && two->data < one->data)
 	{
 		swap(stack_a);
-		print_stack(stack_a);
 		r_rotate(stack_a);
-		print_stack(stack_a);
 		ft_printf("sa\nrra\n");
 	}
 }
@@ -84,31 +82,47 @@ void sorting_a(t_deq *stack_a)
 	two = one->next;
 	thr = stack_a->bottom;
 	if (thr->data > one->data && thr->data < two->data)
+	{
 		swap(stack_a);
+		ft_printf("sa\n");
+	}
 	else if (one->data > two->data && one->data < thr->data)
+	{
 		swap(stack_a);
+		ft_printf("sa\n");
+	}
 	else if (two->data > thr->data && one->data > two->data)
+	{
 		swap(stack_a);
+		ft_printf("sa\n");
+	}
 }
 
 void	push_a_to_b(t_deq *stack_a, t_deq *stack_b, int pivot_a, int pivot_b)
 {
-	int		idx;
-
-	idx = 0;
 	while (stack_a->size > pivot_a)
 	{
 		if (stack_a->top->data > pivot_b)
+		{
 			rotate(stack_a);
+			ft_printf("ra\n");
+		}
 		else if (stack_a->top->data > pivot_a)
+		{
 			push_p(stack_a, stack_b);
+			ft_printf("pb\n");
+		}
 		else
 		{
 			push_p(stack_a, stack_b);
 			rotate(stack_b);
+			ft_printf("pb\nrb\n");
 		}
 	}
 	while (stack_a->size > 3)
+	{
 		push_p(stack_a, stack_b);
+		ft_printf("pb\n");
+	}
 	sorting_a(stack_a);
 }
