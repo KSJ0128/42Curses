@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 20:33:41 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/28 13:34:37 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/12 01:47:33 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,26 @@
 
 void	final_sort(t_deq *stack_a)
 {
+	t_node	*node;
+	int roll;
+
+	roll = 0;
+	node = stack_a->top;
+	while (node->data != 0) // stack_b rotate 해서 특정 원소가 top으로 오게
+	{
+		node = node->next;
+		roll++;
+	}
+	if (roll > (stack_a->size / 2))
+	{
+		roll = stack_a->size - roll;
+		while (stack_a->top->data != 0)
+		{
+			r_rotate(stack_a);
+			ft_printf("rra\n");
+		}
+		return ;
+	}
 	while (stack_a->top->data != 0)
 	{
 		rotate(stack_a);
@@ -21,16 +41,16 @@ void	final_sort(t_deq *stack_a)
 	}
 }
 
-void	do_cmd(t_deq *stack_a, t_deq *stack_b, int roll_b, int roll_a)
+void	do_cmd(t_deq *stack_a, t_deq *stack_b, t_cmd *cmd)
 {
-	if (roll_a > (stack_a->size / 2) && roll_b > (stack_b->size / 2))
-		optimize_a_b(stack_a, stack_b, roll_b, roll_a);
-	else if (roll_a > (stack_a->size / 2))
-		optimize_a(stack_a, roll_a);
-	else if (roll_b > (stack_b->size / 2))
-		optimize_b(stack_b, roll_b);
+	if (cmd->roll_a > (stack_a->size / 2) && cmd->roll_b > (stack_b->size / 2))
+		optimize_a_b(stack_a, stack_b, cmd->roll_a, cmd->roll_b);
+	else if (cmd->roll_a > (stack_a->size / 2))
+		optimize_a(stack_a, stack_b, cmd->roll_a, cmd->roll_b);
+	else if (cmd->roll_b > (stack_b->size / 2))
+		optimize_b(stack_a, stack_b, cmd->roll_a, cmd->roll_b);
 	else
-		roll_a_b(stack_a, stack_b, roll_b, roll_a);
+		roll_a_b(stack_a, stack_b, cmd->roll_a, cmd->roll_b);
 	push_p(stack_b, stack_a);
 	ft_printf("pa\n");
 }
@@ -52,7 +72,8 @@ int	counting_cmd_top(const t_deq *stack_a, int x)
 	return (ERROR);
 }
 
-int	counting_cmd(const t_deq *stack_a, int x, int *roll_a)
+
+int	counting_cmd(const t_deq *stack_a, int x)
 {
 	t_node	*node;
 	int		cmd;
@@ -75,15 +96,13 @@ int	counting_cmd(const t_deq *stack_a, int x, int *roll_a)
 		node = node->next;
 		cmd++;
 	}
-	*roll_a = cmd;
 	return (cmd);
 }
 
 // stack_b의 특정 원소가 알맞는 위치에 위치하는 명령어의 개수 찾기
-int	searching_b(const t_deq *stack_a, const t_deq *stack_b, int roll_b, int *roll_a)
+int	searching_b(t_deq *stack_a, t_deq *stack_b, int roll_b)
 {
 	int idx;
-	int	cmd_cnt;
 	t_node	*node;
 
 	idx = 0;
@@ -93,34 +112,50 @@ int	searching_b(const t_deq *stack_a, const t_deq *stack_b, int roll_b, int *rol
 		node = node->next;
 		idx++;
 	}
-	cmd_cnt = counting_cmd(stack_a, node->data, roll_a) + roll_b;
-	return (cmd_cnt);
+	return (counting_cmd(stack_a, node->data) + roll_b); // 최적화 전 스택 a roll 수
+}
+
+int calculate_cmd(t_deq *stack_a, t_deq *stack_b, int total, int roll_b)
+{
+	int opt_a;
+	int opt_b;
+
+	opt_a = total - roll_b;
+	opt_b = roll_b;
+
+	if (opt_a > (stack_a->size / 2))
+		opt_a = stack_a->size - opt_a;
+	if (opt_b > (stack_b->size / 2))
+		opt_b = stack_b->size - opt_b;
+	return (opt_a + opt_b);
 }
 
 // Complete Sorting A
 void	push_b_to_a(t_deq *stack_a, t_deq *stack_b)
 {
-	int	tmp;
-	int	idx;
-	int	total_cmd; // 최소 roll_a + roll_b
-	int roll_a; // 최소 roll_a
-	int	roll_b; // 최소 roll_b
+	int	total_tmp;
+	int	b_idx;
+	t_cmd* cmd;
 
-	roll_b = MAX;
+	cmd = (t_cmd*)malloc(sizeof(t_cmd));
+	if (!cmd)
+		exit(1);
 	while (stack_b->size > 0)
 	{
-		idx = 0;
-		while (stack_b->size > idx)
+		b_idx = 0;
+		cmd->total_roll = MAX;
+		while (stack_b->size > b_idx)
 		{
-			tmp = searching_b(stack_a, stack_b, idx, &roll_a);
-			if (total_cmd < tmp)
+			total_tmp = searching_b(stack_a, stack_b, b_idx); // B의 특정 원소를 A로 옮길 때 필요한 최적화 안된 명령어 개수
+			if (cmd->total_roll > calculate_cmd(stack_a, stack_b, total_tmp, b_idx))
 			{
-				total_cmd = tmp;
-				roll_b = idx;
+				cmd->total_roll = calculate_cmd(stack_a, stack_b, total_tmp, b_idx); // 최적화 된 전체 명령어 개수
+				cmd->roll_b = b_idx; // 최적화 안된 Roll b 명령어 개수
+				cmd->roll_a = total_tmp - cmd->roll_b; // 최적화 안된 Roll a 명령어 개수
 			}
-			idx++;
+			b_idx++;
 		}
-		do_cmd(stack_a, stack_b, roll_b, roll_a);
+		do_cmd(stack_a, stack_b, cmd); // 최소 명령어 수 필요한 것 push
 	}
 }
 
@@ -136,4 +171,6 @@ void	greedy(t_deq *stack_a)
 	push_a_to_b(stack_a, stack_b, pivot_a, pivot_b);
 	push_b_to_a(stack_a, stack_b);
 	final_sort(stack_a);
+	// print_stack(stack_a);
+	// print_stack(stack_b);
 }

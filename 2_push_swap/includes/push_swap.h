@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:22:08 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/28 13:29:14 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/12 01:38:45 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,13 @@ typedef struct stack
 	t_node *top;
 	t_node *bottom;
 } t_deq;
+
+typedef struct command
+{
+	int roll_a;
+	int roll_b;
+	int total_roll;
+} t_cmd;
 
 long long	ft_atoll(const char *str);
 void		swap(t_deq *stack);
@@ -70,10 +77,10 @@ void		sorting_two(t_deq *stack_a);
 void		sorting_three_one(t_deq *stack_a);
 void		sorting_three_two(t_deq *stack_a);
 void		sorting_a(t_deq *stack_a);
-int			searching_b(const t_deq *stack_a, const t_deq *stack_b, int roll_b, int *roll_a);
-void	optimize_a_b(t_deq *stack_a, t_deq *stack_b, int roll_b, int roll_a);
-void	optimize_a(t_deq *stack_a, int roll_a);
-void	optimize_b(t_deq *stack_b, int roll_b);
-void	roll_a_b(t_deq *stack_a, t_deq *stack_b, int roll_b, int roll_a);
+int			searching_b(t_deq *stack_a, t_deq *stack_b, int roll_b);
+void	optimize_a_b(t_deq *stack_a, t_deq *stack_b, int roll_a, int roll_b);
+void	optimize_a(t_deq *stack_a, t_deq *stack_b, int roll_a, int roll_b);
+void	optimize_b(t_deq *stack_a, t_deq *stack_b, int roll_a, int roll_b);
+void	roll_a_b(t_deq *stack_a, t_deq *stack_b, int roll_a, int roll_b);
 
 #endif

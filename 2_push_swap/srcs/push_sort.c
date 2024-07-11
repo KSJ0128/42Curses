@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:09:00 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/28 13:36:50 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/11 17:01:52 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void sorting_a(t_deq *stack_a)
 
 void	push_a_to_b(t_deq *stack_a, t_deq *stack_b, int pivot_a, int pivot_b)
 {
-	while (stack_a->size > pivot_a)
+	while (stack_b->size < pivot_b)
 	{
 		if (stack_a->top->data > pivot_b)
 		{

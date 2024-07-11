@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:50:45 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/28 12:33:58 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/12 00:42:29 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_exception(int err)
 		ft_printf("Error\nInvalid argument.\n");
 	else if (err == 1)
 		ft_printf("Error\nInvalid number.\n");
-	
+
 	exit(0);
 }
 
@@ -45,6 +45,5 @@ int	main(int argc, char *argv[])
 		sorting_three_one(stack_a);
 	else
 		greedy(stack_a);
-	// print_stack(stack_a);
 	return (0);
 }
