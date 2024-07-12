@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:50:45 by seojkim           #+#    #+#             */
-/*   Updated: 2024/07/12 00:42:29 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/12 15:25:04 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	handle_exception(int err)
 		ft_printf("Error\nInvalid argument.\n");
 	else if (err == 1)
 		ft_printf("Error\nInvalid number.\n");
-
+	else if (err == 2)
+		ft_printf("KO\n");
 	exit(0);
 }
 

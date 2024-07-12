@@ -1,39 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_1.c                                        :+:      :+:    :+:   */
+/*   command_2_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 17:48:08 by seojkim           #+#    #+#             */
-/*   Updated: 2024/07/13 01:18:35 by seojkim          ###   ########.fr       */
+/*   Created: 2024/03/04 17:15:56 by seojkim           #+#    #+#             */
+/*   Updated: 2024/07/13 01:13:21 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
-void swap(t_deq *stack) {
-    t_node *node1;
-	t_node *node2;
+void rotate(t_deq *stack) {
+    t_node *node;
 
     if (stack->size < 2)
         return;
-	node1 = pop_top(stack);
-	node2 = pop_top(stack);
-	push_top(stack, node1);
-	push_top(stack, node2);
+	node = pop_top(stack);
+	push_bottom(stack, node);
 }
 
 
-void	swap_all(t_deq *p, t_deq *q)
+void	rotate_all(t_deq *p, t_deq *q)
 {
-	swap(p);
-	swap(q);
+	rotate(p);
+	rotate(q);
 }
 
-void	push(t_deq *throw, t_deq *catch)
+void	r_rotate(t_deq *stack)
 {
-	if (throw->size == 0)
+	t_node	*node;
+
+	if (stack->size < 2)
 		return ;
-	push_top(catch, pop_top(throw));
+	node = pop_bottom(stack);
+	push_top(stack, node);
+}
+
+void	r_rotate_all(t_deq *p, t_deq *q)
+{
+	r_rotate(p);
+	r_rotate(q);
 }

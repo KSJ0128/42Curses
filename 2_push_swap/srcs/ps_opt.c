@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   roll.c                                             :+:      :+:    :+:   */
+/*   ps_opt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/28 13:17:08 by seojkim           #+#    #+#             */
-/*   Updated: 2024/07/12 00:41:09 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/12 14:49:26 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,19 @@ void	roll_a_b(t_deq *stack_a, t_deq *stack_b, int roll_a, int roll_b)
 		ft_printf("rb\n");
 		roll_b--;
 	}
+}
+
+int optimize_cmd(t_deq *stack_a, t_deq *stack_b, int total, int roll_b)
+{
+	int opt_a;
+	int opt_b;
+
+	opt_a = total - roll_b;
+	opt_b = roll_b;
+
+	if (opt_a > (stack_a->size / 2))
+		opt_a = stack_a->size - opt_a;
+	if (opt_b > (stack_b->size / 2))
+		opt_b = stack_b->size - opt_b;
+	return (opt_a + opt_b);
 }
