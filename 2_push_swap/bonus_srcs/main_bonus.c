@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:14:55 by seojkim           #+#    #+#             */
-/*   Updated: 2024/07/13 01:16:45 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/15 15:00:09 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	run_instruction(t_deq *stack_a, t_deq *stack_b, char *instruction)
 		r_rotate(stack_b);
 	else if (ft_strncmp(instruction, "rrr\n", 5) == 0)
 		r_rotate_all(stack_a, stack_b);
+	else
+		handle_exception(3);
 }
 
 int	do_checker(t_deq *stack_a)
@@ -73,7 +75,7 @@ int	do_checker(t_deq *stack_a)
 		free(instruction);
 	}
 	if (stack_b->size != 0)
-		handle_exception(3);
+		handle_exception(2);
 	check_sorting(stack_a);
 	return (1);
 }
@@ -86,19 +88,9 @@ void	handle_exception(int err)
 		ft_printf("Error\nInvalid number.\n");
 	else if (err == 2)
 		ft_printf("KO\n");
+	else if (err == 3)
+		ft_printf("Error\n");
 	exit(0);
-}
-
-void print_stack(const t_deq *stack)
-{
-    t_node *current = stack->top;
-
-    while (current != NULL)
-    {
-        ft_printf("%d ", current->data); // 스택의 데이터를 출력
-        current = current->next;
-    }
-    ft_printf("\n");
 }
 
 int	main(int argc, char *argv[])
@@ -107,8 +99,6 @@ int	main(int argc, char *argv[])
 	int		idx;
 
 	if (argc < 2)
-		handle_exception(0);
-	else if (argc == 2)
 		exit(0);
 	stack_a = stack_init();
 	if (!stack_a)
@@ -122,6 +112,8 @@ int	main(int argc, char *argv[])
 	stack_to_array(stack_a);
 	if (do_checker(stack_a))
 		ft_printf("OK\n");
+	else
+		handle_exception(2);
 	free_stack(stack_a);
 	return (0);
 }

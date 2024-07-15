@@ -9,7 +9,7 @@ FT_C = ft_printf.c print_char_str_nbr.c
 
 FT_O = $(FT_C:.c=.o)
 
-FT_H = ft_printf.h
+FT_H = ../includes/ft_printf.h
 
 OBJS = $(FT_O)
 

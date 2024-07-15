@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:22:08 by seojkim           #+#    #+#             */
-/*   Updated: 2024/07/13 01:18:04 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/15 13:47:56 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ t_node		*pop_top(t_deq *stack);
 t_node		*pop_bottom(t_deq *stack);
 void		print_array(int *array, int size);
 void		print_stack(const t_deq *stack);
+int			need_sort_check(t_deq *stack);
 
 #endif

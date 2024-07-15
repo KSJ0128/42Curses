@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:47:04 by seojkim           #+#    #+#             */
-/*   Updated: 2024/07/12 14:47:48 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/15 13:48:45 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,4 +125,23 @@ void sorting_a(t_deq *stack_a)
 		swap(stack_a);
 		ft_printf("sa\n");
 	}
+}
+
+int	need_sort_check(t_deq *stack)
+{
+	t_node	*node;
+	int		tmp;
+
+	tmp = stack->top->data;
+	if (tmp != 0)
+		return (SUCCESS);
+	node = stack->top->next;
+	while (node)
+	{
+		if (tmp + 1 != node->data)
+			return (SUCCESS);
+		tmp = node->data;
+		node = node->next;
+	}
+	return (ERROR);
 }

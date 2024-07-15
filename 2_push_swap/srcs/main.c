@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 02:50:45 by seojkim           #+#    #+#             */
-/*   Updated: 2024/07/12 15:25:04 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/15 14:04:14 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	main(int argc, char *argv[])
 
 	if (argc < 2)
 		handle_exception(0);
-	else if (argc == 2)
-		exit(0);
+	// else if (argc == 2)
+	// 	exit(0);
 	stack_a = stack_init();
 	idx = 1;
 	while (idx < argc)
@@ -39,12 +39,14 @@ int	main(int argc, char *argv[])
 		parsing_to_stack(argv[idx], stack_a);
 		idx++;
 	}
+	if (stack_a->size == 1)
+		exit(0);
 	stack_to_array(stack_a);
 	if (stack_a->size == 2)
 		sorting_two(stack_a);
 	else if (stack_a->size == 3)
 		sorting_three_one(stack_a);
-	else
+	if (need_sort_check(stack_a))
 		greedy(stack_a);
 	return (0);
 }

@@ -21,7 +21,7 @@ ft_lstiter_bonus.c ft_lstlast_bonus.c ft_lstmap_bonus.c ft_lstnew_bonus.c ft_lst
 
 BONUS_O = $(BONUS_C:.c=.o)
 
-FT_H = libft.h
+FT_H = ../includes/libft.h
 
 ifdef BONUS
 	OBJS = $(FT_O) $(BONUS_O)
