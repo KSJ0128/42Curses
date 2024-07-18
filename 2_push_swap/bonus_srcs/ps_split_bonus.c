@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ps_split.c                                         :+:      :+:    :+:   */
+/*   ps_split_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 18:23:58 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/22 19:05:24 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/15 15:49:03 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "push_swap.h"
+#include "push_swap.h"
 
 char	*ps_strdup_size(char *src, int size)
 {
@@ -18,7 +18,7 @@ char	*ps_strdup_size(char *src, int size)
 
 	dup = (char *)malloc(size + 1);
 	if (!dup)
-		exit (1);
+		exit(1);
 	ft_strlcpy(dup, src, size + 1);
 	return (dup);
 }

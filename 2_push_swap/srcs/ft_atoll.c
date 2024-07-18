@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:42:43 by seojkim           #+#    #+#             */
-/*   Updated: 2024/07/12 14:42:59 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/17 12:58:03 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ long long	ft_atoll(const char *str)
 		sign = -1;
 	}
 	if (*str == '\0' || *str < '0' || *str > '9')
-		handle_exception(1);
+		handle_exception(0);
 	while (*str >= '0' && *str <= '9')
 	{
 		if (*str < '0' || *str > '9')
-			handle_exception(1);
+			handle_exception(0);
 		num = num * 10 + (*str - '0');
 		str++;
 	}

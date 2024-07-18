@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:47:04 by seojkim           #+#    #+#             */
-/*   Updated: 2024/07/15 13:48:45 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/15 15:46:38 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 void	final_sort(t_deq *stack_a)
 {
 	t_node	*node;
-	int roll;
+	int		roll;
 
 	roll = 0;
 	node = stack_a->top;
-	while (node->data != 0) // stack_b rotate 해서 특정 원소가 top으로 오게
+	while (node->data != 0)
 	{
 		node = node->next;
 		roll++;
@@ -41,7 +41,7 @@ void	final_sort(t_deq *stack_a)
 	}
 }
 
-void sorting_two(t_deq *stack_a)
+void	sorting_two(t_deq *stack_a)
 {
 	if (stack_a->top->data > stack_a->bottom->data)
 	{
@@ -50,11 +50,11 @@ void sorting_two(t_deq *stack_a)
 	}
 }
 
-void sorting_three_one(t_deq *stack_a)
+void	sorting_three_one(t_deq *stack_a)
 {
-	t_node *one;
-	t_node *two;
-	t_node *thr;
+	t_node	*one;
+	t_node	*two;
+	t_node	*thr;
 
 	one = stack_a->top;
 	two = one->next;
@@ -79,11 +79,11 @@ void sorting_three_one(t_deq *stack_a)
 		sorting_three_two(stack_a);
 }
 
-void sorting_three_two(t_deq *stack_a)
+void	sorting_three_two(t_deq *stack_a)
 {
-	t_node *one;
-	t_node *two;
-	t_node *thr;
+	t_node	*one;
+	t_node	*two;
+	t_node	*thr;
 
 	one = stack_a->top;
 	two = one->next;
@@ -101,11 +101,11 @@ void sorting_three_two(t_deq *stack_a)
 	}
 }
 
-void sorting_a(t_deq *stack_a)
+void	sorting_a(t_deq *stack_a)
 {
-	t_node *one;
-	t_node *two;
-	t_node *thr;
+	t_node	*one;
+	t_node	*two;
+	t_node	*thr;
 
 	one = stack_a->top;
 	two = one->next;
@@ -125,23 +125,4 @@ void sorting_a(t_deq *stack_a)
 		swap(stack_a);
 		ft_printf("sa\n");
 	}
-}
-
-int	need_sort_check(t_deq *stack)
-{
-	t_node	*node;
-	int		tmp;
-
-	tmp = stack->top->data;
-	if (tmp != 0)
-		return (SUCCESS);
-	node = stack->top->next;
-	while (node)
-	{
-		if (tmp + 1 != node->data)
-			return (SUCCESS);
-		tmp = node->data;
-		node = node->next;
-	}
-	return (ERROR);
 }

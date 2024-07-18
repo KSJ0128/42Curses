@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 15:34:28 by seojkim           #+#    #+#             */
-/*   Updated: 2024/01/16 16:16:04 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/15 15:30:48 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,3 @@ int		backup_update(char **backup, char *buff);
 int		read_line(int fd, char **backup, int *r_size);
 char	*get_next_line(int fd);
 #endif
-

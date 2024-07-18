@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/13 00:43:06 by seojkim           #+#    #+#             */
-/*   Updated: 2024/07/13 01:07:49 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/15 15:34:07 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	push_bottom(t_deq *stack, t_node *node)
 
 t_node	*pop_top(t_deq *stack)
 {
-	t_node *node;
+	t_node	*node;
 
 	node = stack->top;
 	if (stack->size == 0)
@@ -70,7 +70,7 @@ t_node	*pop_top(t_deq *stack)
 
 t_node	*pop_bottom(t_deq *stack)
 {
-	t_node *node;
+	t_node	*node;
 
 	node = stack->bottom;
 	if (stack->size == 0)

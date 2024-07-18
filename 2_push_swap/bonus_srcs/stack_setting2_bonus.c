@@ -1,18 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_setting2.c                                   :+:      :+:    :+:   */
+/*   stack_setting2_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 18:11:15 by seojkim           #+#    #+#             */
-/*   Updated: 2024/06/22 21:04:43 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/17 13:07:16 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// Find Array for Indexing
 t_node	*find_data(t_deq *stack, int *array, int idx)
 {
 	t_node	*now;
@@ -27,7 +26,6 @@ t_node	*find_data(t_deq *stack, int *array, int idx)
 	return (now);
 }
 
-// Indexing stack for Sandglass
 void	indexing_stack(t_deq *stack, int *array)
 {
 	int		idx;
@@ -42,7 +40,6 @@ void	indexing_stack(t_deq *stack, int *array)
 	}
 }
 
-// Parameter Overlap Check
 void	overlap_check(int *array, int size)
 {
 	int	idx;
@@ -51,22 +48,21 @@ void	overlap_check(int *array, int size)
 	while (idx < size)
 	{
 		if (array[idx] == array[idx - 1])
-			handle_exception(1);
+			handle_exception(0);
 		idx++;
 	}
 }
 
-// Quick Sort for Indexing
-void	sorting_array(int *array, int s, int e) // 0 - 9
+void	sorting_array(int *array, int s, int e)
 {
 	int	pivot;
 	int	tmp;
 	int	l;
 	int	r;
 
-	pivot = array[(s + e) / 2]; // 4
-	l = s; // 0
-	r = e; // 9
+	pivot = array[(s + e) / 2];
+	l = s;
+	r = e;
 	while (l <= r)
 	{
 		while (array[l] < pivot)

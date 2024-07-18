@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:14:55 by seojkim           #+#    #+#             */
-/*   Updated: 2024/07/15 15:00:09 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/17 13:45:00 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	check_sorting(t_deq *stack)
 
 	tmp = stack->top->data;
 	if (tmp != 0)
-		handle_exception(KO);
+		handle_exception(1);
 	node = stack->top->next;
 	while (node)
 	{
 		if (tmp + 1 != node->data)
-			handle_exception(KO);
+			handle_exception(1);
 		tmp = node->data;
 		node = node->next;
 	}
@@ -55,7 +55,7 @@ void	run_instruction(t_deq *stack_a, t_deq *stack_b, char *instruction)
 	else if (ft_strncmp(instruction, "rrr\n", 5) == 0)
 		r_rotate_all(stack_a, stack_b);
 	else
-		handle_exception(3);
+		handle_exception(0);
 }
 
 int	do_checker(t_deq *stack_a)
@@ -70,26 +70,23 @@ int	do_checker(t_deq *stack_a)
 	{
 		instruction = get_next_line(0);
 		if (!instruction)
-			break;
+			break ;
 		run_instruction(stack_a, stack_b, instruction);
 		free(instruction);
 	}
 	if (stack_b->size != 0)
-		handle_exception(2);
+		handle_exception(1);
 	check_sorting(stack_a);
+	free_stack(stack_b);
 	return (1);
 }
 
 void	handle_exception(int err)
 {
 	if (err == 0)
-		ft_printf("Error\nInvalid argument.\n");
-	else if (err == 1)
-		ft_printf("Error\nInvalid number.\n");
-	else if (err == 2)
-		ft_printf("KO\n");
-	else if (err == 3)
 		ft_printf("Error\n");
+	else if (err == 1)
+		ft_printf("KO\n");
 	exit(0);
 }
 
@@ -113,7 +110,7 @@ int	main(int argc, char *argv[])
 	if (do_checker(stack_a))
 		ft_printf("OK\n");
 	else
-		handle_exception(2);
+		handle_exception(1);
 	free_stack(stack_a);
 	return (0);
 }

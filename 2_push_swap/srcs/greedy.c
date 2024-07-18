@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 20:33:41 by seojkim           #+#    #+#             */
-/*   Updated: 2024/07/13 01:18:19 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/07/17 12:56:54 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	do_cmd(t_deq *stack_a, t_deq *stack_b, t_cmd *cmd)
 	ft_printf("pa\n");
 }
 
-
 int	counting_cmd_top(const t_deq *stack_a, int x)
 {
 	int		top;
@@ -42,7 +41,6 @@ int	counting_cmd_top(const t_deq *stack_a, int x)
 		return (SUCCESS);
 	return (ERROR);
 }
-
 
 int	counting_cmd(const t_deq *stack_a, int x)
 {
@@ -70,20 +68,19 @@ int	counting_cmd(const t_deq *stack_a, int x)
 	return (cmd);
 }
 
-// stack_b의 특정 원소가 알맞는 위치에 위치하는 명령어의 개수 찾기
 int	searching_b(t_deq *stack_a, t_deq *stack_b, int roll_b)
 {
-	int idx;
+	int		idx;
 	t_node	*node;
 
 	idx = 0;
 	node = stack_b->top;
-	while (idx < roll_b) // stack_b rotate 해서 특정 원소가 top으로 오게
+	while (idx < roll_b)
 	{
 		node = node->next;
 		idx++;
 	}
-	return (counting_cmd(stack_a, node->data) + roll_b); // 최적화 전 스택 a roll 수
+	return (counting_cmd(stack_a, node->data) + roll_b);
 }
 
 void	greedy(t_deq *stack_a)
@@ -98,5 +95,5 @@ void	greedy(t_deq *stack_a)
 	push_a_to_b(stack_a, stack_b, pivot_a, pivot_b);
 	push_b_to_a(stack_a, stack_b);
 	final_sort(stack_a);
-	free_stack(stack_a);
+	free_stack(stack_b);
 }
