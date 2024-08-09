@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 21:50:04 by seojkim           #+#    #+#             */
-/*   Updated: 2024/01/03 15:07:30 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/08/04 14:00:12 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,11 @@ int	ft_printf(const char *str, ...)
 					return (-1);
 				cnt++;
 			}
-			else
-				if (print_args(*str, &args, &cnt) == -1)
-					return (-1);
-		}
-		else
-			if (print_char(*str, &cnt) == -1)
+			else if (print_args(*str, &args, &cnt) == -1)
 				return (-1);
+		}
+		else if (print_char(*str, &cnt) == -1)
+			return (-1);
 		str++;
 	}
 	va_end(args);
