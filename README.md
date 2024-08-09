@@ -8,6 +8,7 @@
 | 1 | Born2beroot | 110 | 2024.02.29 |
 | 2 | so_long | 93 | 2024.06.21 |
 | 2 | push_swap | 125 | 2024.07.18 |
+| 2 | minitalk | 125 | 2024.08.09 |
 
 # Exam
 | Circle | Exam | Score | Date |
