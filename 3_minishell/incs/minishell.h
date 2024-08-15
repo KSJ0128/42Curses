@@ -6,23 +6,42 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:33:42 by seojkim           #+#    #+#             */
-/*   Updated: 2024/08/13 21:10:30 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/08/15 21:44:07 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define SUCCESS 1
+# define NULL 0
+# define TRUE 1
+# define FALSE 0
+
+# define SINGLE 0
+# define DOUBLE 1
+
+# define DELI_REDIR 0
+# define DELI_ETC 1
+
+# define ERROR_QUOTE 0
+
 #include <stdio.h>
 #include "libft.h"
 #include "readline.h"
 #include "history.h"
 
-typedef struct quote
+typedef struct token
 {
-	char	data;
-	void	*next;
-}	t_quote;
+	char	*data;
+	struct token	*next;
+}	t_token;
+
+typedef struct envi
+{
+	t_token	*tokens;
+	int		quote[2];
+}	t_envi;
 
 typedef struct file
 {
@@ -44,6 +63,29 @@ typedef struct process
 }	t_process;
 
 void	handle_error(int num);
-void	pipe_parsing(char *str);
+int		check_quote(char *line, t_envi *envi);
+void	is_quote(char c, t_envi *envi);
+int		is_deli(char *line, t_envi *envi, int idx);
+int		check_deli(char *line, t_envi *envi, int start, int idx);
+void	delete_empty_token(t_envi *tokens);
+void	add_token(char *line, t_envi *envi, int start, int idx);
+void	tokenize(char *line, char **envp, t_envi *envi);
+void	expand_var(char **envp, t_envi *envi);
 
 #endif
+
+
+//   "   "|asf<sdf>>asdfasdfasd   |
+/*
+//
+토큰 출력 테스트
+	int idx = 0;
+	t_token	*now;
+	now = envi->tokens;
+	while (now != NULL)
+	{
+		printf("Token[%d] : %s\n", idx, now->data);
+		now = now->next;
+		idx++;
+	}
+*/

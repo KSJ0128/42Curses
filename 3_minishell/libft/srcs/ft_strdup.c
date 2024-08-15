@@ -6,11 +6,22 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 19:54:15 by seojkim           #+#    #+#             */
-/*   Updated: 2023/11/08 15:29:56 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/08/15 13:08:26 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+char	*ft_strndup(const char *s1, int size)
+{
+	char	*address;
+
+	address = (char *)malloc(size + 1);
+	if (address == NULL)
+		return (0);
+	ft_strlcpy(address, s1, size + 1);
+	return (address);
+}
 
 char	*ft_strdup(const char *s1)
 {
