@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:33:42 by seojkim           #+#    #+#             */
-/*   Updated: 2024/08/15 21:44:07 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/08/15 22:21:10 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	expand_var(char **envp, t_envi *envi);
 
 
 //   "   "|asf<sdf>>asdfasdfasd   |
+//    "asfafd<adf>'  'asdf"<asdfa>>asdfasdf | adfas||
 /*
 //
 토큰 출력 테스트

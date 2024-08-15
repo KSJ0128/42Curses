@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:32:58 by seojkim           #+#    #+#             */
-/*   Updated: 2024/08/15 21:50:53 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/08/15 22:23:37 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int argc, char **argv, char **envp)
 	envi = (t_envi *)malloc(sizeof(t_envi));
 	while (1)
 	{
-		line = readline("\033[35mminishell$>\033[35m ");
+		line = readline("\033[35mminishell$>\033[0m ");
 		setting_envi(envi);
 		if (line)
 		{
@@ -55,6 +55,15 @@ int	main(int argc, char **argv, char **envp)
 			if (!check_quote(line, envi))
 				handle_error(1);
 			tokenize(line, envp, envi);
+			int idx = 0;
+	t_token	*now;
+	now = envi->tokens;
+	while (now != NULL)
+	{
+		printf("Token[%d] : %s\n", idx, now->data);
+		now = now->next;
+		idx++;
+	}
 		}
 	}
 	return (0);

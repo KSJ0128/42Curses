@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:20 by seojkim           #+#    #+#             */
-/*   Updated: 2024/08/15 20:15:22 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/08/15 22:24:01 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	check_deli(char *line, t_envi *envi, int start, int idx)
 		add_token(line, envi, start, idx + 2);
 		return (DELI_REDIR);
 	}
-	else if (line[idx] == '|')
+	else if (line[idx] == '|' || line[idx] == '<' || line[idx] == '>')
 	{
 		add_token(line, envi, idx, idx + 1);
 		return (DELI_ETC);
