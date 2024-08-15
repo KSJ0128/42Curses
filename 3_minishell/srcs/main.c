@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:32:58 by seojkim           #+#    #+#             */
-/*   Updated: 2024/08/15 22:23:37 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/08/15 22:29:16 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int argc, char **argv, char **envp)
 	envi = (t_envi *)malloc(sizeof(t_envi));
 	while (1)
 	{
-		line = readline("\033[35mminishell$>\033[0m ");
+		line = readline("\033[34mminishell$>\033[0m ");
 		setting_envi(envi);
 		if (line)
 		{
