@@ -1,24 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handler.c                                    :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/13 15:18:59 by seojkim           #+#    #+#             */
-/*   Updated: 2024/08/17 21:59:51 by seojkim          ###   ########.fr       */
+/*   Created: 2024/08/17 21:54:32 by seojkim           #+#    #+#             */
+/*   Updated: 2024/08/17 22:04:52 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_error(int num)
+void	change_data(t_token *token, char *str)
 {
-	if (num == -1)
-		printf("Error : Malloc Error.\n");
-	else if (num == 0)
-		printf("Error : Invalid arguments.\n");
-	else if (num == 0)
-		printf("Error : Invalid quotes.\n");
-	exit(0);
+	free(token->data);
+	token->data = str;
+}
+
+void	free_tokens(t_token *tokens)
+{
+	t_token *now;
+
+	now = tokens;
+	while (now != NULL)
+	{
+		free(now->data);
+		now = now->next;
+	}
+}
+
+void	free_envi(t_envi *envi)
+{
+	free_tokens(envi->tokens);
+	free(envi);
 }

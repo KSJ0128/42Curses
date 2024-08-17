@@ -6,36 +6,11 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 17:07:27 by seojkim           #+#    #+#             */
-/*   Updated: 2024/08/15 22:24:05 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/08/17 22:00:33 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// 공백 토큰 삭제
-void	delete_empty_token(t_envi *envi)
-{
-	t_token	*now;
-	t_token	*tmp;
-
-	now = envi->tokens;
-	while (strncmp(now->data, " ", 1) == 0)
-	{
-		tmp = now;
-		now = now->next;
-		free(tmp);
-	}
-	while (now->next != NULL)
-	{
-		if (strncmp(now->next->data, " ", 1) == 0)
-		{
-			tmp = now->next;
-			now->next = now->next->next;
-			free(tmp);
-		}
-		now = now->next;
-	}
-}
 
 // start ~ idx - 1까지의 토큰 추가
 void	add_token(char *line, t_envi *envi, int start, int idx)
@@ -46,13 +21,15 @@ void	add_token(char *line, t_envi *envi, int start, int idx)
 
 	str = ft_strndup(line + start, idx - start);
 	if (!str)
-		exit(1);
+		handle_error(-1);
 	now = envi->tokens;
 	if (now->data == NULL)
 		now->data = str;
 	else
 	{
 		token = (t_token *)malloc(sizeof(t_token));
+		if (!token)
+			handle_error(-1);
 		token->data = str;
 		token->next = NULL;
 		while (now->next != NULL)
@@ -61,7 +38,7 @@ void	add_token(char *line, t_envi *envi, int start, int idx)
 	}
 }
 
-void	tokenize(char *line, char **envp, t_envi *envi)
+void	tokenize(char *line, t_envi *envi)
 {
 	int	start;
 	int	idx;
@@ -84,5 +61,5 @@ void	tokenize(char *line, char **envp, t_envi *envi)
 		}
 		idx++;
 	}
-	expand_var(envp, envi);
+	add_token(line, envi, start, idx); // 구분자 앞에 문자열 존재시 단어 토큰 추가
 }

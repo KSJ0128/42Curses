@@ -6,11 +6,26 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 17:17:20 by seojkim           #+#    #+#             */
-/*   Updated: 2024/08/15 22:24:01 by seojkim          ###   ########.fr       */
+/*   Updated: 2024/08/17 20:56:26 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	set_out_quote(char quote, t_envi *envi)
+{
+	if (envi->quote[SINGLE] == 0 && envi->quote[DOUBLE] == 0)
+		return ;
+	else if (envi->quote[SINGLE] == 1 && envi->quote[DOUBLE] == 1)
+	{
+		if (quote == '\'')
+			envi->out_quote = '\"';
+		else
+			envi->out_quote = '\'';
+	}
+	else
+		envi->out_quote = quote;
+}
 
 // 따옴표 쌍 확인
 int	check_quote(char *line, t_envi *envi)
@@ -32,12 +47,19 @@ int	check_quote(char *line, t_envi *envi)
 }
 
 // 따옴표 상태 반영
-void	is_quote(char c, t_envi *envi)
+int	is_quote(char c, t_envi *envi)
 {
 	if (c == '\'' && !(envi->quote[DOUBLE]))
+	{
 		envi->quote[SINGLE] ^= 1;
+		return (SUCCESS);
+	}
 	else if (c == '\"' && !(envi->quote[SINGLE]))
+	{
 		envi->quote[DOUBLE] ^= 1;
+		return (SUCCESS);
+	}
+	return (FALSE);
 }
 
 // 구분자인지 확인
@@ -69,3 +91,5 @@ int	check_deli(char *line, t_envi *envi, int start, int idx)
 	}
 	return (DELI_ETC);
 }
+
+// $USER | {$USER | {$USER} | ${USER} | "$USER" | '$USER' | '"$USER"' | "'$USER'" | $"USER"
