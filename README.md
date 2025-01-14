@@ -10,6 +10,7 @@
 | 2 | push_swap | 125 | 2024.07.18 |
 | 2 | minitalk | 125 | 2024.08.09 |
 | 3 | minishell | 100 | 2024.09.10 |
+| 3 | philosopher | 100 | 2025.01.12 |
 
 # Exam
 | Circle | Exam | Score | Date |
