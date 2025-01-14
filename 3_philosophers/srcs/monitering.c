@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 01:53:39 by seojkim           #+#    #+#             */
-/*   Updated: 2025/01/12 02:43:43 by seojkim          ###   ########.fr       */
+/*   Updated: 2025/01/14 23:57:39 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,6 @@ void	monitoring(t_philo *philos, t_data *data)
 			break ;
 		if (check_philos_state(philos, data))
 			break ;
-		ft_usleep(1000, data);
+		usleep(100);
 	}
 }

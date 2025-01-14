@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 17:58:23 by seojkim           #+#    #+#             */
-/*   Updated: 2025/01/12 00:13:14 by seojkim          ###   ########.fr       */
+/*   Updated: 2025/01/14 23:56:49 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,3 @@ int	init_philo(t_data *data, t_philo **philos, pthread_mutex_t *forks)
 	}
 	return (0);
 }
-

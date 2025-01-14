@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 18:42:42 by seojkim           #+#    #+#             */
-/*   Updated: 2025/01/12 02:45:11 by seojkim          ###   ########.fr       */
+/*   Updated: 2025/01/14 23:57:11 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_usleep(long time, t_data *data)
 	{
 		if (check_stop_flag(data))
 			break ;
-		usleep(200);
+		usleep(100);
 	}
 }
 

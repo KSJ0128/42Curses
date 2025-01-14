@@ -6,7 +6,7 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 21:29:26 by seojkim           #+#    #+#             */
-/*   Updated: 2025/01/12 02:30:41 by seojkim          ###   ########.fr       */
+/*   Updated: 2025/01/14 23:58:07 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	eating(t_philo *philo, t_data *data)
 	ft_usleep(data->eat_time, data);
 	pthread_mutex_lock(&data->meal_mutex);
 	philo->eat_cnt++;
-	if (data->eat_num != -1 && philo->eat_cnt >= data->eat_num)
+	if (data->eat_num != -1 && philo->eat_cnt >= data->eat_num && check_stop_flag(data))
 		result = 0;
 	pthread_mutex_unlock(&data->meal_mutex);
 	pthread_mutex_unlock(philo->left_fork);

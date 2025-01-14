@@ -6,16 +6,11 @@
 /*   By: seojkim <seojkim@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 18:42:48 by seojkim           #+#    #+#             */
-/*   Updated: 2025/01/12 00:25:04 by seojkim          ###   ########.fr       */
+/*   Updated: 2025/01/14 23:56:39 by seojkim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void   check_leak(void)
-{
-	system("leaks philo");
-}
 
 int	main(int ac, char **av)
 {
@@ -24,7 +19,6 @@ int	main(int ac, char **av)
 	pthread_t		*threads;
 	pthread_mutex_t	*forks;
 
-	atexit(check_leak);
 	if (ac < 5 || ac > 6)
 		return (1);
 	if (init_data(ac, av, &data))
